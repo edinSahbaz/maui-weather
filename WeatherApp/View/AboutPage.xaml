@@ -1,11 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="WeatherApp.View.HomePage"
-             xmlns:viewmodel="clr-namespace:WeatherApp.ViewModel"
-             x:DataType="viewmodel:HomeViewModel"
-             Title="Home">
+             x:Class="WeatherApp.View.AboutPage"
+             Title="About">
     <VerticalStackLayout>
-        <Label Text="Home" />
+        <Label Text="About" />
     </VerticalStackLayout>
 </ContentPage>

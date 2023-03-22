@@ -1,9 +1,12 @@
-﻿namespace WeatherApp.View;
+﻿using WeatherApp.ViewModel;
+
+namespace WeatherApp.View;
 
 public partial class HomePage : ContentPage
 {
-	public HomePage()
+	public HomePage(HomeViewModel viewModel)
 	{
 		InitializeComponent();
+		BindingContext = viewModel;
 	}
 }

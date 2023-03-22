@@ -41,10 +41,6 @@
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
 
 		<!-- Images -->
-		<MauiImage Include="Resources\Images\*" />
-		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
-
-		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
 
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
@@ -61,11 +57,17 @@
 	  <None Remove="View\" />
 	  <None Remove="ViewModel\" />
 	  <None Remove="Service\" />
+	  <None Remove="Resources\Images\" />
+	  <None Remove="Resources\Fonts\Font Awesome 6 Free-Regular-400.otf" />
+	  <None Remove="Resources\Images\home.svg" />
+	  <None Remove="Resources\Fonts\FontAwesome-Regular-400.otf" />
+	  <None Remove="Resources\Fonts\FontAwesome-Solid-900.otf" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Model\" />
 	  <Folder Include="View\" />
 	  <Folder Include="ViewModel\" />
 	  <Folder Include="Service\" />
+	  <Folder Include="Resources\Images\" />
 	</ItemGroup>
 </Project>
