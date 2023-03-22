@@ -57,7 +57,6 @@
 	  <None Remove="Model\" />
 	  <None Remove="View\" />
 	  <None Remove="ViewModel\" />
-	  <None Remove="Service\" />
 	  <None Remove="Resources\Images\" />
 	  <None Remove="Resources\Fonts\Font Awesome 6 Free-Regular-400.otf" />
 	  <None Remove="Resources\Images\home.svg" />
@@ -74,12 +73,14 @@
 	  <Folder Include="Model\" />
 	  <Folder Include="View\" />
 	  <Folder Include="ViewModel\" />
-	  <Folder Include="Service\" />
 	  <Folder Include="Resources\Images\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <MauiImage Include="Resources\Images\about.png" />
 	  <MauiImage Include="Resources\Images\favourite.png" />
 	  <MauiImage Include="Resources\Images\home.png" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\WeatherAPI.Standard\WeatherAPI.Standard.csproj" />
 	</ItemGroup>
 </Project>

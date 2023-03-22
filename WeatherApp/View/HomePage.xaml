@@ -3,11 +3,77 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="WeatherApp.View.HomePage"
              xmlns:viewmodel="clr-namespace:WeatherApp.ViewModel"
+             xmlns:model="clr-namespace:WeatherAPI.Standard.Models;assembly=WeatherAPI.Standard"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="viewmodel:HomeViewModel"
              Title="Home">
 
     <VerticalStackLayout>
-        <Label Text="Home" />
+        <!-- Header with current info -->
+        <Image HeightRequest="100"
+               WidthRequest="100"
+               Source="{Binding CurrentWeather.Condition.Icon, StringFormat='https:{0}'}"/>
+
+        <Label Text="{Binding CurrentLocation.Name}" />
+        <Label Text="{Binding CurrentLocation.Country}" />
+        <Label Text="{Binding CurrentLocation.Localtime}" />
+
+        <Label Text="{Binding CurrentWeather.TempC, StringFormat='{0:F1} °C'}" />
+        <Label Text="{Binding CurrentWeather.FeelslikeC, StringFormat='{0:F1} °C'}" />
+        <Label Text="{Binding CurrentWeather.Condition.Text}" />
+
+        <Label Text="{Binding CurrentWeather.Humidity, StringFormat='{0:F1}%'}" />
+        <Label Text="{Binding CurrentWeather.PressureMb, StringFormat='{0:F0}mBar'}" />
+
+        <Label Text="{Binding CurrentWeather.WindKph, StringFormat='{0:F1}km/h'}" />
+        <Label Text="{Binding CurrentWeather.WindDir}" />
+
+        <Label Text="{Binding CurrentWeather.PrecipMm, StringFormat='{0:F2}'}" />
+
+        <Label Text="{Binding WeatherForecastDays[0].Astro.Sunrise}" />
+        <Label Text="{Binding WeatherForecastDays[0].Astro.Sunset}" />
+        <!-- END Header with current info -->
+
+
+
+        <!-- Hourly weather forecast -->
+        <CollectionView ItemsLayout="HorizontalList"
+                        HeightRequest="110"
+                        ItemsSource="{Binding WeatherForecastHours}"
+                        VerticalScrollBarVisibility="Never"
+                        HorizontalScrollBarVisibility="Never">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Hour">
+                    <VerticalStackLayout>
+                        <Label Text="{Binding Time, StringFormat='{0}'}"/>
+                        <Image
+                            WidthRequest="50"
+                            HeightRequest="50"
+                            Source="{Binding Condition.Icon, StringFormat='https:{0}'}"/>
+                        <Label Text="{Binding TempC}"/>
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <!-- END Hourly weather forecast -->
+
+
+        <!-- Daily weather forecast -->
+        <CollectionView ItemsSource="{Binding WeatherForecastDays}"
+                        VerticalScrollBarVisibility="Never"
+                        HorizontalScrollBarVisibility="Never">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Forecastday">
+                    <HorizontalStackLayout Spacing="20">
+                        <Label Text="{Binding Date}" />
+                        <Label Text="{Binding Day.Condition.Text}" />
+                        <Image Source="{Binding Day.Condition.Icon, StringFormat='https:{0}'}" />
+                        <Label Text="{Binding Day.MintempC, StringFormat='{0:F1} °C'}" />
+                        <Label Text="{Binding Day.MaxtempC, StringFormat='{0:F1} °C'}" />
+                    </HorizontalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <!-- END Daily weather forecast -->
     </VerticalStackLayout>
 </ContentPage>
