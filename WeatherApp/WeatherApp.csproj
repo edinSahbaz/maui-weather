@@ -66,6 +66,9 @@
 	  <None Remove="Resources\Images\about.png" />
 	  <None Remove="Resources\Images\favourite.png" />
 	  <None Remove="Resources\Images\home.png" />
+	  <None Remove="Resources\Fonts\Poppins-Light.ttf" />
+	  <None Remove="Resources\Fonts\Poppins-Regular.ttf" />
+	  <None Remove="Resources\Fonts\Poppins-SemiBold.ttf" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Model\" />
