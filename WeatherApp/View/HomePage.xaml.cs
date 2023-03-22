@@ -1,8 +1,8 @@
 ﻿namespace WeatherApp.View;
 
-public partial class HomeView : ContentPage
+public partial class HomePage : ContentPage
 {
-	public HomeView()
+	public HomePage()
 	{
 		InitializeComponent();
 	}

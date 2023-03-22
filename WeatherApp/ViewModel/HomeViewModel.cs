@@ -1,11 +1,9 @@
 ﻿using System;
-namespace WeatherApp.ViewModel
+
+namespace WeatherApp.ViewModel;
+
+public partial class HomeViewModel : BaseViewModel
 {
-	public class HomeViewModel
-	{
-		public HomeViewModel()
-		{
-		}
-	}
+
 }
 
