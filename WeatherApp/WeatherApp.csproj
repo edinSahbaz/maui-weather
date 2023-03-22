@@ -63,6 +63,9 @@
 	  <None Remove="Resources\Images\home.svg" />
 	  <None Remove="Resources\Fonts\FontAwesome-Regular-400.otf" />
 	  <None Remove="Resources\Fonts\FontAwesome-Solid-900.otf" />
+	  <None Remove="Resources\Images\about.png" />
+	  <None Remove="Resources\Images\favourite.png" />
+	  <None Remove="Resources\Images\home.png" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Model\" />
@@ -70,5 +73,10 @@
 	  <Folder Include="ViewModel\" />
 	  <Folder Include="Service\" />
 	  <Folder Include="Resources\Images\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <MauiImage Include="Resources\Images\about.png" />
+	  <MauiImage Include="Resources\Images\favourite.png" />
+	  <MauiImage Include="Resources\Images\home.png" />
 	</ItemGroup>
 </Project>

@@ -4,21 +4,18 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:view="clr-namespace:WeatherApp.View"
-    xmlns:model="clr-namespace:WeatherApp.Model"
-    Shell.FlyoutBehavior="Disabled">
-
-
+    xmlns:model="clr-namespace:WeatherApp.Model">
 
     <TabBar>
-        <Tab Title="Home">
+        <Tab Title="" Icon="home.png">
             <ShellContent ContentTemplate="{DataTemplate view:HomePage}" />
         </Tab>
 
-        <Tab Title="Favourites">
+        <Tab Title="" Icon="favourite.png">
             <ShellContent ContentTemplate="{DataTemplate view:FavouritesPage}" />
         </Tab>
 
-        <Tab Title="About">
+        <Tab Title="" Icon="about.png">
             <ShellContent ContentTemplate="{DataTemplate view:AboutPage}" />
         </Tab>
     </TabBar>
