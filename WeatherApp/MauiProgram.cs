@@ -11,13 +11,10 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder.UseMauiApp<App>().ConfigureFonts(fonts =>
         {
-            fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-            fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             fonts.AddFont("Poppins-Light.ttf", "PoppinsLight");
             fonts.AddFont("Poppins-Regular.ttf", "PoppinsRegular");
             fonts.AddFont("Poppins-Semibold.ttf", "PoppinsSemibold");
-            fonts.AddFont("FontAwesome-Regular-400.otf", "FaRegular");
-            fonts.AddFont("FontAwesome-Solid-900.otf", "FaSolid");
+            fonts.AddFont("MaterialIcons-Regular.ttf", "IconFontTypes");
         }).UseMauiCommunityToolkit();
 #if DEBUG
         builder.Logging.AddDebug();

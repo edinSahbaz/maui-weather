@@ -42,8 +42,18 @@ public partial class HomeViewModel : BaseViewModel
             WeatherAPIClient client = new WeatherAPIClient();
             var forecastWeather = await client.APIs.GetForecastWeatherAsync("Sarajevo", 3);
 
-            CurrentWeather = forecastWeather.Current;
             CurrentLocation = forecastWeather.Location;
+
+            var newImgUrl = forecastWeather.Current.Condition.Icon[^11..];
+
+            var dayChar = 'd';
+            if (newImgUrl.Contains("night")) dayChar = 'n';
+            
+            newImgUrl = "i" + newImgUrl.Substring(newImgUrl.Length - 7);
+            newImgUrl = newImgUrl.Substring(0, newImgUrl.Length - 4) + dayChar + ".png";
+
+            CurrentWeather = forecastWeather.Current;
+            CurrentWeather.Condition.Icon = newImgUrl;
 
             var forecastDays = new ObservableCollection<Forecastday>(forecastWeather.Forecast.Forecastday);
 

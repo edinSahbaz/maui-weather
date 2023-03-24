@@ -41,6 +41,8 @@
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
 
 		<!-- Images -->
+		<MauiFont Include="Resources\Images\*" />
+		<MauiFont Include="Resources\Images\Weather\*" />
 		<MauiFont Include="Resources\Fonts\*" />
 
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
@@ -68,17 +70,44 @@
 	  <None Remove="Resources\Fonts\Poppins-Light.ttf" />
 	  <None Remove="Resources\Fonts\Poppins-Regular.ttf" />
 	  <None Remove="Resources\Fonts\Poppins-SemiBold.ttf" />
+	  <None Remove="Helper\" />
+	  <None Remove="Resources\Fonts\MaterialIcons-Regular.ttf" />
+	  <None Remove="Resources\Images\sunset_line.png" />
+	  <None Remove="Resources\Images\Weather\" />
+	  <None Remove="Resources\Images\Weather\Day\" />
+	  <None Remove="Resources\Images\Weather\Night\" />
+	  <None Remove="Resources\Images\Weather\Day\113.svg" />
+	  <None Remove="Resources\Images\Weather\Night\113.svg" />
+	  <None Remove="Resources\Images\Weather\Day\i113d.svg" />
+	  <None Remove="Resources\Images\Weather\Night\i113n.svg" />
+	  <None Remove="Resources\Images\humidity.svg" />
+	  <None Remove="Resources\Images\moon-full.svg" />
+	  <None Remove="Resources\Images\wind.svg" />
+	  <None Remove="Resources\Images\clear-day.svg" />
+	  <None Remove="Resources\Images\barometer.svg" />
+	  <None Remove="Resources\Images\sun.svg" />
+	  <None Remove="Resources\Images\moon.svg" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Model\" />
 	  <Folder Include="View\" />
 	  <Folder Include="ViewModel\" />
 	  <Folder Include="Resources\Images\" />
+	  <Folder Include="Helper\" />
+	  <Folder Include="Resources\Images\Weather\" />
+	  <Folder Include="Resources\Images\Weather\Day\" />
+	  <Folder Include="Resources\Images\Weather\Night\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <MauiImage Include="Resources\Images\about.png" />
 	  <MauiImage Include="Resources\Images\favourite.png" />
 	  <MauiImage Include="Resources\Images\home.png" />
+	  <MauiImage Include="Resources\Images\sunset_line.png" />
+	  <MauiImage Include="Resources\Images\Weather\Day\i113d.svg" />
+	  <MauiImage Include="Resources\Images\Weather\Night\i113n.svg" />
+	  <MauiImage Include="Resources\Images\humidity.svg" />
+	  <MauiImage Include="Resources\Images\wind.svg" />
+	  <MauiImage Include="Resources\Images\barometer.svg" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\WeatherAPI.Standard\WeatherAPI.Standard.csproj" />
