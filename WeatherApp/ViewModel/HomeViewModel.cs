@@ -2,12 +2,15 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using WeatherAPI.Standard;
 using WeatherAPI.Standard.Models;
+using WeatherApp.Services;
 
 namespace WeatherApp.ViewModel;
 
 public partial class HomeViewModel : BaseViewModel
 {
-    IConnectivity connectivity;
+    IConnectivityService _connectivityService;
+    IWeatherService _weatherService;
+    IAlertService _alertService;
 
     [ObservableProperty]
     private WeatherAPI.Standard.Models.Location currentLocation;
@@ -18,77 +21,74 @@ public partial class HomeViewModel : BaseViewModel
     [ObservableProperty]
     private ObservableCollection<Forecastday> weatherForecastDays; 
 
-    public HomeViewModel(IConnectivity connectivity)
+    public HomeViewModel(IConnectivityService connectivityService, IWeatherService weatherService, IAlertService alertService)
     {
-        this.connectivity = connectivity;
+        Title = "Weather App";
 
-        Task.Run(GetWeatherData);
+        _connectivityService = connectivityService;
+        _weatherService = weatherService;
+        _alertService = alertService;
+
+        Task.Run(LoadWeatherData);
     }
 
-    async Task GetWeatherData()
+    async Task LoadWeatherData()
     {
         if (IsBusy) return;
 
         try
         {
-            if (connectivity.NetworkAccess != NetworkAccess.Internet)
-            {
-                Application.Current.Dispatcher.Dispatch(() => {
-                    Application.Current.MainPage.DisplayAlert("Weather App", "Please check your internet connection!", "OK");
-                });
-                return;
-            }
+            if (!_connectivityService.CheckConnection()) throw new Exception("Please check your internet connection!");
 
-            WeatherAPIClient client = new WeatherAPIClient();
-            var forecastWeather = await client.APIs.GetForecastWeatherAsync("Sarajevo", 3);
+            // Gets all weather data
+            var forecastWeather = await _weatherService.GetAllWeatherData("Sarajevo");
 
+            // Sets current loaction and weather data
             CurrentLocation = forecastWeather.Location;
-
-            var newImgUrl = forecastWeather.Current.Condition.Icon[^11..];
-
-            var dayChar = 'd';
-            if (newImgUrl.Contains("night")) dayChar = 'n';
-            
-            newImgUrl = "i" + newImgUrl.Substring(newImgUrl.Length - 7);
-            newImgUrl = newImgUrl.Substring(0, newImgUrl.Length - 4) + dayChar + ".png";
-
             CurrentWeather = forecastWeather.Current;
-            CurrentWeather.Condition.Icon = newImgUrl;
 
+            // Sets weather data for next 24 hours
+            WeatherForecastHours = SetNext24HoursData(forecastWeather);
+
+            // Sets next 3 days forecast and modifies day property to display day name
             var forecastDays = new ObservableCollection<Forecastday>(forecastWeather.Forecast.Forecastday);
-
-            foreach (var day in forecastDays)
-            {
-                var date = DateTime.Parse(day.Date);
-                var dayName = date.DayOfWeek.ToString();
-
-                day.Date = dayName == DateTime.Now.DayOfWeek.ToString() ? "Today" : dayName;
-            }
-
+            SetDayNames(forecastDays);
             WeatherForecastDays = forecastDays;
-
-            // Gets Weather of 2 days from now
-            var forecastNext48Hours = new List<Hour>(forecastWeather.Forecast.Forecastday[0].Hour);
-            forecastNext48Hours.AddRange(forecastWeather.Forecast.Forecastday[1].Hour);
-
-            // Finds index of next hour
-            var nextHourIndex = forecastNext48Hours.IndexOf(forecastNext48Hours.Where(x => x.Time.CompareTo(DateTime.Now.ToString("yyyy-MM-dd HH:mm")) > 0).FirstOrDefault());
-
-            // Modify Time so it shows correct format
-            foreach (var hour in forecastNext48Hours)
-            {
-                hour.Time = hour.Time.Substring(11);
-            }
-
-            // Sets weather data 24 hours from now
-            WeatherForecastHours = new ObservableCollection<Hour>(forecastNext48Hours.GetRange(nextHourIndex, 24));
         }
         catch (Exception e)
         {
-            Application.Current.Dispatcher.Dispatch(() => {
-                Application.Current.MainPage.DisplayAlert("Weather App", e.Message, "OK");
-            });
+            _alertService.DisplayAlert(Title, e.Message, "OK");
         }
+    }
+
+    static void SetDayNames(ObservableCollection<Forecastday> forecastDays)
+    {
+        foreach (var day in forecastDays)
+        {
+            var date = DateTime.Parse(day.Date);
+            var dayName = date.DayOfWeek.ToString();
+
+            day.Date = dayName == DateTime.Now.DayOfWeek.ToString() ? "Today" : dayName;
+        }
+    }
+
+    static ObservableCollection<Hour> SetNext24HoursData(ForecastJsonResponse forecastWeather)
+    {
+        // Gets Weather of 2 days from now
+        var forecastNext48Hours = new List<Hour>(forecastWeather.Forecast.Forecastday[0].Hour);
+        forecastNext48Hours.AddRange(forecastWeather.Forecast.Forecastday[1].Hour);
+
+        // Finds index of next hour
+        var nextHourIndex = forecastNext48Hours.IndexOf(forecastNext48Hours.Where(x => x.Time.CompareTo(DateTime.Now.ToString("yyyy-MM-dd HH:mm")) > 0).FirstOrDefault());
+
+        // Modify Time so it shows correct format
+        foreach (var hour in forecastNext48Hours)
+            hour.Time = hour.Time.Substring(11);
+
+        // Sets weather data 24 hours from now
+        var output = new ObservableCollection<Hour>(forecastNext48Hours.GetRange(nextHourIndex, 24));
+
+        return output;
     }
 }
 

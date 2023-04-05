@@ -4,12 +4,12 @@
              x:Class="WeatherApp.View.HomePage"
              xmlns:viewmodel="clr-namespace:WeatherApp.ViewModel"
              xmlns:model="clr-namespace:WeatherAPI.Standard.Models;assembly=WeatherAPI.Standard"
-             xmlns:helper="clr-namespace:WeatherApp.Helper"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="viewmodel:HomeViewModel"
              Title="Home">
 
-    <VerticalStackLayout >
+    <ScrollView>
+        <VerticalStackLayout HeightRequest="900" >
         <!-- Header with current info -->
         <VerticalStackLayout>
             <Label Text="Your Location Now"
@@ -25,8 +25,8 @@
                 </Label.Text>
             </Label>
 
-            <Image HeightRequest="180"
-                   Source="{Binding CurrentWeather.Condition.Icon}"/>
+            <Image HeightRequest="120"
+                   Source="{Binding CurrentWeather.Condition.Icon, StringFormat='https:{0}'}"/>
 
             <Border Stroke="{StaticResource Background}"
                     HorizontalOptions="Center"
@@ -159,6 +159,7 @@
         <!-- END Hourly weather forecast -->
 
 
+
         <!-- Daily weather forecast -->
         <CollectionView ItemsSource="{Binding WeatherForecastDays}"
                         VerticalScrollBarVisibility="Never"
@@ -180,4 +181,5 @@
         </CollectionView>
         <!-- END Daily weather forecast -->
     </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

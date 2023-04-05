@@ -2,8 +2,11 @@
 using WeatherApp.View;
 using WeatherApp.ViewModel;
 using CommunityToolkit.Maui;
+using WeatherApp.Services;
+using WeatherAPI.Standard;
 
 namespace WeatherApp;
+
 public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
@@ -22,6 +25,11 @@ public static class MauiProgram
         builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
         builder.Services.AddSingleton<IGeolocation>(Geolocation.Default);
         builder.Services.AddSingleton<IMap>(Map.Default);
+
+        builder.Services.AddSingleton<IConnectivityService, ConnectivityService>();
+        builder.Services.AddSingleton<IWeatherService, WeatherService>();
+        builder.Services.AddSingleton<IAlertService, AlertService>();
+        builder.Services.AddSingleton<WeatherAPIClient>();
 
         builder.Services.AddSingleton<HomePage>();
         builder.Services.AddSingleton<FavouritesPage>();
