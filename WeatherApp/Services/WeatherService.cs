@@ -13,9 +13,9 @@ public class WeatherService : IWeatherService
         _weatherAPIClient = weatherAPIClient;
     }
 
-    public async Task<ForecastJsonResponse> GetAllWeatherData(string city)
+    public async Task<ForecastJsonResponse> GetAllWeatherData(string q)
     {
-        var forecastWeather = await _weatherAPIClient.APIs.GetForecastWeatherAsync(city, 3);
+        var forecastWeather = await _weatherAPIClient.APIs.GetForecastWeatherAsync(q, 3);
         return forecastWeather;
     }
 }

@@ -29,6 +29,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<IConnectivityService, ConnectivityService>();
         builder.Services.AddSingleton<IWeatherService, WeatherService>();
         builder.Services.AddSingleton<IAlertService, AlertService>();
+        builder.Services.AddSingleton<ILocationService, LocationService>();
         builder.Services.AddSingleton<WeatherAPIClient>();
 
         builder.Services.AddSingleton<HomePage>();

@@ -9,6 +9,7 @@ namespace WeatherApp.ViewModel;
 public partial class HomeViewModel : BaseViewModel
 {
     IConnectivityService _connectivityService;
+    ILocationService _locationService;
     IWeatherService _weatherService;
     IAlertService _alertService;
 
@@ -21,11 +22,13 @@ public partial class HomeViewModel : BaseViewModel
     [ObservableProperty]
     private ObservableCollection<Forecastday> weatherForecastDays; 
 
-    public HomeViewModel(IConnectivityService connectivityService, IWeatherService weatherService, IAlertService alertService)
+    public HomeViewModel(IConnectivityService connectivityService, ILocationService locationService,
+        IWeatherService weatherService, IAlertService alertService)
     {
         Title = "Weather App";
 
         _connectivityService = connectivityService;
+        _locationService = locationService;
         _weatherService = weatherService;
         _alertService = alertService;
 
@@ -38,10 +41,15 @@ public partial class HomeViewModel : BaseViewModel
 
         try
         {
-            if (!_connectivityService.CheckConnection()) throw new Exception("Please check your internet connection!");
+            if (!_connectivityService.CheckConnection())
+                throw new Exception("Please check your internet connection!");
 
-            // Gets all weather data
-            var forecastWeather = await _weatherService.GetAllWeatherData("Sarajevo");
+            // Get current location
+            var currentLocation = await _locationService.GetCurrentLocation();
+
+            // Gets all weather data for location
+            var q = $"{currentLocation.Latitude},{currentLocation.Longitude}";
+            var forecastWeather = await _weatherService.GetAllWeatherData(q);
 
             // Sets current loaction and weather data
             CurrentLocation = forecastWeather.Location;

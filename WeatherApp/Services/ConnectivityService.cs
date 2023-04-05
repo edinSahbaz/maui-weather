@@ -16,6 +16,5 @@ public class ConnectivityService : IConnectivityService
         bool connectionAvaillable = _connectivity.NetworkAccess == NetworkAccess.Internet;
         return connectionAvaillable;
     }
-
 }
 

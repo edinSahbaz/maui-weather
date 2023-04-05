@@ -4,6 +4,6 @@ namespace WeatherApp.Services
 {
     public interface IWeatherService
     {
-        Task<ForecastJsonResponse> GetAllWeatherData(string city);
+        Task<ForecastJsonResponse> GetAllWeatherData(string q);
     }
 }
