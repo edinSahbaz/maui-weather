@@ -18,5 +18,11 @@ public class WeatherService : IWeatherService
         var forecastWeather = await _weatherAPIClient.APIs.GetForecastWeatherAsync(q, 3);
         return forecastWeather;
     }
+
+    public CurrentJsonResponse GetCurrentData(string q)
+    {
+        var forecastWeather = _weatherAPIClient.APIs.GetRealtimeWeather(q);
+        return forecastWeather;
+    }
 }
 
