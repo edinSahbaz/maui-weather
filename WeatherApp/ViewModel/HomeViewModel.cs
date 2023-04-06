@@ -60,7 +60,7 @@ public partial class HomeViewModel : BaseViewModel
 
             // Sets next 3 days forecast and modifies day property to display day name
             var forecastDays = new ObservableCollection<Forecastday>(forecastWeather.Forecast.Forecastday);
-            SetDayNames(forecastDays);
+            SetDaysNames(forecastDays);
             WeatherForecastDays = forecastDays;
         }
         catch (Exception e)
@@ -69,7 +69,7 @@ public partial class HomeViewModel : BaseViewModel
         }
     }
 
-    static void SetDayNames(ObservableCollection<Forecastday> forecastDays)
+    static void SetDaysNames(ObservableCollection<Forecastday> forecastDays)
     {
         foreach (var day in forecastDays)
         {

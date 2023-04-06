@@ -10,6 +10,9 @@
 
     <ScrollView>
         <VerticalStackLayout>
+            <Entry Text="{Binding CityNameEntryValue,Mode=TwoWay}"  />
+            <Button Text="Add City" Command="{Binding SaveCityCommand}" />
+
             <CollectionView ItemsLayout="VerticalList"
                             HeightRequest="1000"
                             ItemsSource="{Binding FavouriteLocations}"
@@ -20,6 +23,8 @@
                         <HorizontalStackLayout>
                             <VerticalStackLayout>
                                 <Label Text="{Binding Location.Name}"
+                                   HorizontalTextAlignment="Center"/>
+                                <Label Text="{Binding Location.Country}"
                                    HorizontalTextAlignment="Center"/>
                                 <Label Text="{Binding Location.Localtime}"
                                    HorizontalTextAlignment="Center"/>
