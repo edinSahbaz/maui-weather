@@ -32,13 +32,14 @@ public static class MauiProgram
         builder.Services.AddSingleton<ILocationService, LocationService>();
         builder.Services.AddSingleton<WeatherAPIClient>();
 
-        builder.Services.AddSingleton<HomePage>();
-        builder.Services.AddSingleton<FavouritesPage>();
-        builder.Services.AddSingleton<AboutPage>();
-
         builder.Services.AddTransient<HomeViewModel>();
-        builder.Services.AddTransient<FavouritesViewModel>();
-        builder.Services.AddTransient<AboutViewModel>();
+        builder.Services.AddTransient<HomePage>();
+
+        builder.Services.AddSingleton<FavouritesViewModel>();
+        builder.Services.AddSingleton<FavouritesPage>();
+
+        builder.Services.AddSingleton<AboutViewModel>();
+        builder.Services.AddSingleton<AboutPage>();
 
         return builder.Build();
     }

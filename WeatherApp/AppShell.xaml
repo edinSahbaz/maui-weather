@@ -3,19 +3,18 @@
     x:Class="WeatherApp.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:view="clr-namespace:WeatherApp.View"
-    xmlns:model="clr-namespace:WeatherApp.Model">
+    xmlns:view="clr-namespace:WeatherApp.View">
 
     <TabBar>
-        <Tab Title="" Icon="home.png">
+        <Tab Title="Home" Icon="home.png" Route="HomePage">
             <ShellContent ContentTemplate="{DataTemplate view:HomePage}" />
         </Tab>
 
-        <Tab Title="" Icon="favourite.png">
+        <Tab Title="Locations" Icon="favourite.png" Route="HomePage">
             <ShellContent ContentTemplate="{DataTemplate view:FavouritesPage}" />
         </Tab>
 
-        <Tab Title="" Icon="about.png">
+        <Tab Title="About" Icon="about.png" Route="HomePage">
             <ShellContent ContentTemplate="{DataTemplate view:AboutPage}" />
         </Tab>
     </TabBar>

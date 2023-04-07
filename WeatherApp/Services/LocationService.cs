@@ -34,6 +34,14 @@ public class LocationService : ILocationService
         }
     }
 
+    public async Task<string> GetCurrentLocationQuery()
+    {
+        var locationData = await GetCurrentLocation();
+        var currentLocation = $"{locationData.Latitude},{locationData.Longitude}";
+
+        return currentLocation;
+    }
+
     async Task<bool> CheckLocationPermission()
     {
         var locationWhenInUse = new Permissions.LocationWhenInUse();

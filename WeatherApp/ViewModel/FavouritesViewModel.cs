@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using WeatherAPI.Standard.Models;
 using WeatherApp.Services;
 using CommunityToolkit.Mvvm.Input;
+using WeatherApp.View;
 
 namespace WeatherApp.ViewModel;
 
@@ -14,9 +15,9 @@ public partial class FavouritesViewModel : BaseViewModel
     IAlertService _alertService;
 
     [ObservableProperty]
-    private string cityNameEntryValue;
+    string cityNameEntryValue;
     [ObservableProperty]
-    private ObservableCollection<CurrentJsonResponse> favouriteLocations;
+    ObservableCollection<CurrentJsonResponse> favouriteLocations;
 
     public FavouritesViewModel(ILocationService locationService, IWeatherService weatherService, IAlertService alertService)
     {
@@ -29,18 +30,12 @@ public partial class FavouritesViewModel : BaseViewModel
         Task.Run(PopulateFavouritesList);
     }
 
-    async Task<string> GetCurrentLocationQuery()
-    {
-        var locationData = await _locationService.GetCurrentLocation();
-        var currentLocation = $"{locationData.Latitude},{locationData.Longitude}";
-
-        return currentLocation;
-    }
-
     async Task PopulateFavouritesList()
     {
-        var q = await GetCurrentLocationQuery();
+        var q = await _locationService.GetCurrentLocationQuery();
         var currentLocationData = _weatherService.GetCurrentData(q);
+
+        // TODO: read city names from DB
 
         var temp = new ObservableCollection<CurrentJsonResponse>();
         temp.Add(currentLocationData);
@@ -53,12 +48,14 @@ public partial class FavouritesViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    private void SaveCity()
+    void SaveCity()
     {
         var cityName = CityNameEntryValue;
 
         try
         {
+            IsBusy = true;
+
             if(cityName == String.Empty || cityName == null) throw new Exception("Enter the city name, please!");
 
             // Tries to find if the city is already in favourites
@@ -73,7 +70,7 @@ public partial class FavouritesViewModel : BaseViewModel
             data.Location.Localtime = data.Location.Localtime.Substring(11);
             FavouriteLocations.Add(data);
 
-
+            // TODO: implement db insert
         }
         catch (Exception e)
         {
@@ -85,6 +82,19 @@ public partial class FavouritesViewModel : BaseViewModel
 
             _alertService.DisplayAlert(Title, exceptionMsg, "Ok");
         }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+
+    [RelayCommand]
+    async Task GoToCityData(string q)
+    {
+        if (q == null)
+            return;
+
+        await Shell.Current.GoToAsync($"{nameof(HomePage)}?location={q}", true);
     }
 }
 

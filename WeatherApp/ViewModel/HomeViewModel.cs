@@ -1,11 +1,13 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using WeatherAPI.Standard;
 using WeatherAPI.Standard.Models;
 using WeatherApp.Services;
 
 namespace WeatherApp.ViewModel;
 
+[QueryProperty(nameof(Location), "location")]
 public partial class HomeViewModel : BaseViewModel
 {
     IConnectivityService _connectivityService;
@@ -14,13 +16,16 @@ public partial class HomeViewModel : BaseViewModel
     IAlertService _alertService;
 
     [ObservableProperty]
-    private WeatherAPI.Standard.Models.Location currentLocation;
+    string location;
     [ObservableProperty]
-    private Current currentWeather;
+    WeatherAPI.Standard.Models.Location currentLocation;
     [ObservableProperty]
-    private ObservableCollection<Hour> weatherForecastHours;
+    Current currentWeather;
     [ObservableProperty]
-    private ObservableCollection<Forecastday> weatherForecastDays; 
+    ObservableCollection<Hour> weatherForecastHours;
+    [ObservableProperty]
+    ObservableCollection<Forecastday> weatherForecastDays; 
+
 
     public HomeViewModel(IConnectivityService connectivityService, ILocationService locationService,
         IWeatherService weatherService, IAlertService alertService)
@@ -31,7 +36,12 @@ public partial class HomeViewModel : BaseViewModel
         _locationService = locationService;
         _weatherService = weatherService;
         _alertService = alertService;
+    }
 
+    // Overrides OnAppearing event so the API is not called until query params are read
+    [RelayCommand]
+    void Appearing()
+    {
         Task.Run(LoadWeatherData);
     }
 
@@ -41,32 +51,42 @@ public partial class HomeViewModel : BaseViewModel
 
         try
         {
+            IsBusy = true;
+
             if (!_connectivityService.CheckConnection())
                 throw new Exception("Please check your internet connection!");
 
-            // Get current location
-            var currentLocation = await _locationService.GetCurrentLocation();
+            //Get current location if location is not passed
+            if (Location == null)
+                Location = await _locationService.GetCurrentLocationQuery();
 
             // Gets all weather data for location
-            var q = $"{currentLocation.Latitude},{currentLocation.Longitude}";
-            var forecastWeather = await _weatherService.GetAllWeatherData(q);
-
-            // Sets current loaction and weather data
-            CurrentLocation = forecastWeather.Location;
-            CurrentWeather = forecastWeather.Current;
-
-            // Sets weather data for next 24 hours
-            WeatherForecastHours = SetNext24HoursData(forecastWeather);
-
-            // Sets next 3 days forecast and modifies day property to display day name
-            var forecastDays = new ObservableCollection<Forecastday>(forecastWeather.Forecast.Forecastday);
-            SetDaysNames(forecastDays);
-            WeatherForecastDays = forecastDays;
+            var forecastWeather = await _weatherService.GetAllWeatherData(Location);
+            setWeatherData(forecastWeather);
         }
         catch (Exception e)
         {
             _alertService.DisplayAlert(Title, e.Message, "OK");
         }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+
+    void setWeatherData(ForecastJsonResponse forecastWeather)
+    {
+        // Sets current loaction and weather data
+        CurrentLocation = forecastWeather.Location;
+        CurrentWeather = forecastWeather.Current;
+
+        // Sets weather data for next 24 hours
+        WeatherForecastHours = SetNext24HoursData(forecastWeather);
+
+        // Sets next 3 days forecast and modifies day property to display day name
+        var forecastDays = new ObservableCollection<Forecastday>(forecastWeather.Forecast.Forecastday);
+        SetDaysNames(forecastDays);
+        WeatherForecastDays = forecastDays;
     }
 
     static void SetDaysNames(ObservableCollection<Forecastday> forecastDays)
