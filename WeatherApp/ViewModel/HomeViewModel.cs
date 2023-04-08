@@ -7,7 +7,7 @@ using WeatherApp.Services;
 
 namespace WeatherApp.ViewModel;
 
-[QueryProperty(nameof(Location), "location")]
+[QueryProperty(nameof(LocationName), "location")]
 public partial class HomeViewModel : BaseViewModel
 {
     IConnectivityService _connectivityService;
@@ -16,7 +16,7 @@ public partial class HomeViewModel : BaseViewModel
     IAlertService _alertService;
 
     [ObservableProperty]
-    string location;
+    string locationName;
     [ObservableProperty]
     WeatherAPI.Standard.Models.Location currentLocation;
     [ObservableProperty]
@@ -42,6 +42,8 @@ public partial class HomeViewModel : BaseViewModel
     [RelayCommand]
     void Appearing()
     {
+        if (CurrentLocation?.Name != null && CurrentLocation.Name == LocationName) return;
+
         Task.Run(LoadWeatherData);
     }
 
@@ -57,11 +59,11 @@ public partial class HomeViewModel : BaseViewModel
                 throw new Exception("Please check your internet connection!");
 
             //Get current location if location is not passed
-            if (Location == null)
-                Location = await _locationService.GetCurrentLocationQuery();
+            if (LocationName == null)
+                LocationName = await _locationService.GetCurrentLocationQuery();
 
             // Gets all weather data for location
-            var forecastWeather = await _weatherService.GetAllWeatherData(Location);
+            var forecastWeather = await _weatherService.GetAllWeatherData(LocationName);
             setWeatherData(forecastWeather);
         }
         catch (Exception e)
@@ -107,7 +109,8 @@ public partial class HomeViewModel : BaseViewModel
         forecastNext48Hours.AddRange(forecastWeather.Forecast.Forecastday[1].Hour);
 
         // Finds index of next hour
-        var nextHourIndex = forecastNext48Hours.IndexOf(forecastNext48Hours.Where(x => x.Time.CompareTo(DateTime.Now.ToString("yyyy-MM-dd HH:mm")) > 0).FirstOrDefault());
+        var nextHourIndex = forecastNext48Hours.IndexOf(forecastNext48Hours
+            .Where(x => x.Time.CompareTo(DateTime.Now.ToString("yyyy-MM-dd HH:mm")) > 0).FirstOrDefault());
 
         // Modify Time so it shows correct format
         foreach (var hour in forecastNext48Hours)

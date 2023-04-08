@@ -17,6 +17,8 @@ public partial class FavouritesViewModel : BaseViewModel
     [ObservableProperty]
     string cityNameEntryValue;
     [ObservableProperty]
+    CurrentJsonResponse currentLocation;
+    [ObservableProperty]
     ObservableCollection<CurrentJsonResponse> favouriteLocations;
 
     public FavouritesViewModel(ILocationService locationService, IWeatherService weatherService, IAlertService alertService)
@@ -27,24 +29,34 @@ public partial class FavouritesViewModel : BaseViewModel
         _weatherService = weatherService;
         _alertService = alertService;
 
+        FavouriteLocations = new ObservableCollection<CurrentJsonResponse>();
+        Task.Run(LoadCurrentLocationData);
         Task.Run(PopulateFavouritesList);
+    }
+
+    async Task LoadCurrentLocationData()
+    {
+        var q = await _locationService.GetCurrentLocationQuery();
+        var data = _weatherService.GetCurrentData(q);
+
+        data.Location.Localtime = data.Location.Localtime.Substring(11);
+
+        CurrentLocation = data;
     }
 
     async Task PopulateFavouritesList()
     {
-        var q = await _locationService.GetCurrentLocationQuery();
-        var currentLocationData = _weatherService.GetCurrentData(q);
 
-        // TODO: read city names from DB
+        //// TODO: read city names from DB
 
-        var temp = new ObservableCollection<CurrentJsonResponse>();
-        temp.Add(currentLocationData);
+        //var temp = new ObservableCollection<CurrentJsonResponse>();
+        //temp.Add(currentLocationData);
 
-        // Parse Localtime to correct format
-        foreach (var data in temp)
-            data.Location.Localtime = data.Location.Localtime.Substring(11);
+        //// Parse Localtime to correct format
+        //foreach (var data in temp)
+        //    data.Location.Localtime = data.Location.Localtime.Substring(11);
 
-        FavouriteLocations = temp;
+        //FavouriteLocations = temp;
     }
 
     [RelayCommand]
@@ -59,8 +71,11 @@ public partial class FavouritesViewModel : BaseViewModel
             if(cityName == String.Empty || cityName == null) throw new Exception("Enter the city name, please!");
 
             // Tries to find if the city is already in favourites
-            var cityData = FavouriteLocations.Where(x => x.Location.Name.ToLower() == cityName.ToLower()).FirstOrDefault();
-            if (cityData != null) throw new Exception("City already in favourites!");
+            if(FavouriteLocations.Count > 0)
+            {
+                var cityData = FavouriteLocations.Where(x => x.Location.Name.ToLower() == cityName.ToLower()).FirstOrDefault();
+                if (cityData != null) throw new Exception("City already in favourites!");
+            }
 
             // Tries to get data for entered city
             var data = _weatherService.GetCurrentData(cityName);
@@ -91,10 +106,9 @@ public partial class FavouritesViewModel : BaseViewModel
     [RelayCommand]
     async Task GoToCityData(string q)
     {
-        if (q == null)
-            return;
+        if (q == null) return;
 
-        await Shell.Current.GoToAsync($"{nameof(HomePage)}?location={q}", true);
+        await Shell.Current.GoToAsync($"//{nameof(HomePage)}?location={q}", true);
     }
 }
 

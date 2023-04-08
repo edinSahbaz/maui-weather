@@ -12,7 +12,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 
 		<!-- Display name -->
-		<ApplicationTitle>WeatherApp</ApplicationTitle>
+		<ApplicationTitle>Weather App</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.weatherapp</ApplicationId>
@@ -38,7 +38,7 @@
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Splash\splash_icon.svg" Color="#f3efec" BaseSize="128,128" />
 
 		<!-- Images -->
 		<MauiFont Include="Resources\Images\*" />
@@ -47,6 +47,7 @@
 
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+		<MauiSplashScreen Include="Resources\Splash\splash_icon.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -81,6 +82,10 @@
 	  <None Remove="Resources\Images\sun.svg" />
 	  <None Remove="Resources\Images\moon.svg" />
 	  <None Remove="Services\" />
+	  <None Remove="Resources\Images\sunrise.svg" />
+	  <None Remove="Resources\Images\sunset.svg" />
+	  <None Remove="Resources\Splash\partly-cloudy-day.svg" />
+	  <None Remove="Resources\Splash\splash_icon.svg" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="View\" />
@@ -96,6 +101,8 @@
 	  <MauiImage Include="Resources\Images\humidity.svg" />
 	  <MauiImage Include="Resources\Images\wind.svg" />
 	  <MauiImage Include="Resources\Images\barometer.svg" />
+	  <MauiImage Include="Resources\Images\sunrise.svg" />
+	  <MauiImage Include="Resources\Images\sunset.svg" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\WeatherAPI.Standard\WeatherAPI.Standard.csproj" />

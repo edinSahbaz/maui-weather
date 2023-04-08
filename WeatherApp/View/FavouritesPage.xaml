@@ -13,6 +13,31 @@
             <Entry Text="{Binding CityNameEntryValue,Mode=TwoWay}"  />
             <Button Text="Add City" Command="{Binding SaveCityCommand}" />
 
+            <HorizontalStackLayout>
+                            <VerticalStackLayout>
+                                <VerticalStackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FavouritesViewModel}}, Path=GoToCityDataCommand}"
+                                        CommandParameter="{Binding CurrentLocation.Location.Name}"/>
+                                </VerticalStackLayout.GestureRecognizers>
+
+                                <Label Text="{Binding CurrentLocation.Location.Name}"
+                                   HorizontalTextAlignment="Center"/>
+                                <Label Text="{Binding CurrentLocation.Location.Country}"
+                                   HorizontalTextAlignment="Center"/>
+                                <Label Text="{Binding CurrentLocation.Location.Localtime}"
+                                   HorizontalTextAlignment="Center"/>
+                                <Label Text="{Binding CurrentLocation.Current.Condition.Text}"
+                                       HorizontalTextAlignment="Center"/>
+                                <Label Text="{Binding CurrentLocation.Current.TempC, StringFormat='{0:F1} °C'}"
+                                       HorizontalTextAlignment="Center"/>
+                            </VerticalStackLayout>
+
+                            <Image WidthRequest="50"
+                                   HeightRequest="50"
+                                   Source="{Binding CurrentLocation.Current.Condition.Icon, StringFormat='https:{0}'}"/>
+                        </HorizontalStackLayout>
+
             <CollectionView ItemsLayout="VerticalList"
                             HeightRequest="1000"
                             ItemsSource="{Binding FavouriteLocations}"
