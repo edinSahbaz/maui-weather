@@ -13,12 +13,11 @@
     </ContentPage.Behaviors>
 
     <ScrollView>
-        <VerticalStackLayout VerticalOptions="StartAndExpand">
-            <ActivityIndicator HorizontalOptions="Fill"
-                               IsRunning="{Binding IsBusy}"
+        <VerticalStackLayout>
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
                                IsVisible="{Binding IsBusy}"
-                               Color="{StaticResource Primary}"
-                               VerticalOptions="Center" />
+                               Margin="0, 400, 0, 0"
+                               Color="{StaticResource Primary}"/>
 
             <VerticalStackLayout VerticalOptions="StartAndExpand"
                                  IsVisible="{Binding IsNotBusy}">

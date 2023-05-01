@@ -46,7 +46,6 @@ public partial class FavouritesViewModel : BaseViewModel
 
     async Task PopulateFavouritesList()
     {
-
         //// TODO: read city names from DB
 
         //var temp = new ObservableCollection<CurrentJsonResponse>();

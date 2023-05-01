@@ -2,7 +2,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:viewmodel="clr-namespace:WeatherApp.ViewModel"
              x:Class="WeatherApp.View.AboutPage"
+             x:DataType="viewmodel:AboutViewModel"
              Title="About">
     <FlexLayout Direction="Column" JustifyContent="SpaceBetween">
         <VerticalStackLayout
@@ -14,22 +16,31 @@
                    TextColor="White"/>
             <Label Text="Weather App v 1.0"
                    HorizontalTextAlignment="Center"
-                   FontSize="16"
+                   FontSize="15"
                    TextColor="LightGray"/>
         </VerticalStackLayout>
 
         <Label Text="Weather App made in .NET MAUI using WeatherAPI and MAUICommunityToolkit. The App was made as a project for my Mobile Devices App Development university course."
-            Padding="20"
-            FontSize="16"
+            FontSize="15"
+            Margin="20, 0"
             HorizontalTextAlignment="Center"/>
 
-        <HorizontalStackLayout Padding="20" HorizontalOptions="CenterAndExpand">
+        <HorizontalStackLayout
+            Margin="20"
+            HorizontalOptions="CenterAndExpand"
+            >
+            <HorizontalStackLayout.GestureRecognizers>
+                <TapGestureRecognizer
+                    Command="{Binding OpenLinkCommand}">
+                </TapGestureRecognizer>
+            </HorizontalStackLayout.GestureRecognizers>
             <Image Source="https://cdn.weatherapi.com/v4/images/weatherapi_logo.png"
                WidthRequest="60" HeightRequest="30"/>
             <Label Text="Powered by WeatherAPI.com"
                    VerticalOptions="Center"
                    Margin="20, 0, 0, 0"
-                   FontSize="12"/>
+                   FontSize="12"
+                   />
         </HorizontalStackLayout>
     </FlexLayout>
 </ContentPage>
