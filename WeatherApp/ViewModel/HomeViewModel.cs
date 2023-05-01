@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Runtime.ConstrainedExecution;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WeatherAPI.Standard;
@@ -26,11 +27,10 @@ public partial class HomeViewModel : BaseViewModel
     [ObservableProperty]
     ObservableCollection<Forecastday> weatherForecastDays; 
 
-
     public HomeViewModel(IConnectivityService connectivityService, ILocationService locationService,
         IWeatherService weatherService, IAlertService alertService)
     {
-        Title = "Weather App";
+        Title = "RAMU Weather";
 
         _connectivityService = connectivityService;
         _locationService = locationService;
@@ -59,11 +59,12 @@ public partial class HomeViewModel : BaseViewModel
                 throw new Exception("Please check your internet connection!");
 
             //Get current location if location is not passed
+            var coordinates = String.Empty;
             if (LocationName == null)
-                LocationName = await _locationService.GetCurrentLocationQuery();
+                coordinates = await _locationService.GetCurrentLocationQuery();
 
             // Gets all weather data for location
-            var forecastWeather = await _weatherService.GetAllWeatherData(LocationName);
+            var forecastWeather = await _weatherService.GetAllWeatherData(LocationName != null ? LocationName : coordinates);
             setWeatherData(forecastWeather);
         }
         catch (Exception e)
@@ -82,8 +83,10 @@ public partial class HomeViewModel : BaseViewModel
         CurrentLocation = forecastWeather.Location;
         CurrentWeather = forecastWeather.Current;
 
+        if (LocationName == null) LocationName = CurrentLocation.Name;
+
         // Sets weather data for next 24 hours
-        WeatherForecastHours = SetNext24HoursData(forecastWeather);
+        WeatherForecastHours = HomeViewModel.SetNext24HoursData(forecastWeather);
 
         // Sets next 3 days forecast and modifies day property to display day name
         var forecastDays = new ObservableCollection<Forecastday>(forecastWeather.Forecast.Forecastday);
@@ -109,8 +112,8 @@ public partial class HomeViewModel : BaseViewModel
         forecastNext48Hours.AddRange(forecastWeather.Forecast.Forecastday[1].Hour);
 
         // Finds index of next hour
-        var nextHourIndex = forecastNext48Hours.IndexOf(forecastNext48Hours
-            .Where(x => x.Time.CompareTo(DateTime.Now.ToString("yyyy-MM-dd HH:mm")) > 0).FirstOrDefault());
+        Func<Hour, bool> predicate = x => x.Time.CompareTo(DateTime.Now.ToString("yyyy-MM-dd HH:mm")) > 0;
+        var nextHourIndex = forecastNext48Hours.IndexOf(forecastNext48Hours.Where(predicate).FirstOrDefault());
 
         // Modify Time so it shows correct format
         foreach (var hour in forecastNext48Hours)

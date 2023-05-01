@@ -4,7 +4,32 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="WeatherApp.View.AboutPage"
              Title="About">
-    <VerticalStackLayout>
-        <Label Text="About" />
-    </VerticalStackLayout>
+    <FlexLayout Direction="Column" JustifyContent="SpaceBetween">
+        <VerticalStackLayout
+            BackgroundColor="{StaticResource Primary}"
+            Padding="100">
+            <Label Text="About"
+                   HorizontalTextAlignment="Center"
+                   FontSize="48"
+                   TextColor="White"/>
+            <Label Text="Weather App v 1.0"
+                   HorizontalTextAlignment="Center"
+                   FontSize="16"
+                   TextColor="LightGray"/>
+        </VerticalStackLayout>
+
+        <Label Text="Weather App made in .NET MAUI using WeatherAPI and MAUICommunityToolkit. The App was made as a project for my Mobile Devices App Development university course."
+            Padding="20"
+            FontSize="16"
+            HorizontalTextAlignment="Center"/>
+
+        <HorizontalStackLayout Padding="20" HorizontalOptions="CenterAndExpand">
+            <Image Source="https://cdn.weatherapi.com/v4/images/weatherapi_logo.png"
+               WidthRequest="60" HeightRequest="30"/>
+            <Label Text="Powered by WeatherAPI.com"
+                   VerticalOptions="Center"
+                   Margin="20, 0, 0, 0"
+                   FontSize="12"/>
+        </HorizontalStackLayout>
+    </FlexLayout>
 </ContentPage>

@@ -23,7 +23,7 @@ public partial class FavouritesViewModel : BaseViewModel
 
     public FavouritesViewModel(ILocationService locationService, IWeatherService weatherService, IAlertService alertService)
     {
-        Title = "Weather App";
+        Title = "RAMU Weather";
 
         _locationService = locationService;
         _weatherService = weatherService;
