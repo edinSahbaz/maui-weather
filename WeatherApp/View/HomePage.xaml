@@ -12,17 +12,16 @@
 
     </ContentPage.Behaviors>
 
-    <ScrollView>
+    <ScrollView Orientation="Vertical">
         <VerticalStackLayout>
             <ActivityIndicator IsRunning="{Binding IsBusy}"
                                IsVisible="{Binding IsBusy}"
                                Margin="0, 400, 0, 0"
                                Color="{StaticResource Primary}"/>
 
-            <VerticalStackLayout VerticalOptions="StartAndExpand"
-                                 IsVisible="{Binding IsNotBusy}">
+            <VerticalStackLayout IsVisible="{Binding IsNotBusy}">
                 <!-- Header with current info -->
-                <VerticalStackLayout>
+                <VerticalStackLayout> 
                     <Label Text="Your Location Now"
                            TextColor="{StaticResource Gray300}"
                            HorizontalOptions="Center"
@@ -175,7 +174,9 @@
                 <!-- Daily weather forecast -->
                 <CollectionView ItemsSource="{Binding WeatherForecastDays}"
                                 VerticalScrollBarVisibility="Never"
-                                HorizontalScrollBarVisibility="Never">
+                                HorizontalScrollBarVisibility="Never"
+                                HeightRequest="160"
+                                >
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:Forecastday">
                             <HorizontalStackLayout Spacing="20">
