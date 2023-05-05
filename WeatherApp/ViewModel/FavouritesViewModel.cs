@@ -31,7 +31,7 @@ public partial class FavouritesViewModel : BaseViewModel
         _storageService = storageService;
 
         FavouriteLocations = new ObservableCollection<CurrentJsonResponse>();
-        Task.Run(PopulateFavouritesList);
+        MainThread.InvokeOnMainThreadAsync(PopulateFavouritesList);
     }
 
     async Task LoadCurrentLocationData()
@@ -68,7 +68,9 @@ public partial class FavouritesViewModel : BaseViewModel
         {
             IsBusy = true;
 
-            if(cityName == String.Empty || cityName == null) throw new Exception("Enter the city name, please!");
+            // Custom exceptions
+            if (FavouriteLocations.Count >= 6) throw new Exception("You can have a maximum of 6 favourite locations!");
+            if (cityName == String.Empty || cityName == null) throw new Exception("Enter the city name, please!");
 
             // Tries to find if the city is already in favourites
             if(FavouriteLocations.Count > 0)
