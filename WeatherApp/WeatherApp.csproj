@@ -54,6 +54,7 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="5.1.0" />
+		<PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -86,12 +87,14 @@
 	  <None Remove="Resources\Images\sunset.svg" />
 	  <None Remove="Resources\Splash\partly-cloudy-day.svg" />
 	  <None Remove="Resources\Splash\splash_icon.svg" />
+	  <None Remove="Models\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="View\" />
 	  <Folder Include="ViewModel\" />
 	  <Folder Include="Resources\Images\" />
 	  <Folder Include="Services\" />
+	  <Folder Include="Models\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <MauiImage Include="Resources\Images\about.png" />
