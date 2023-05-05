@@ -13,24 +13,24 @@ public partial class FavouritesViewModel : BaseViewModel
     ILocationService _locationService;
     IWeatherService _weatherService;
     IAlertService _alertService;
+    IStorageService _storageService;
 
     [ObservableProperty]
     string cityNameEntryValue;
     [ObservableProperty]
-    CurrentJsonResponse currentLocation;
-    [ObservableProperty]
     ObservableCollection<CurrentJsonResponse> favouriteLocations;
 
-    public FavouritesViewModel(ILocationService locationService, IWeatherService weatherService, IAlertService alertService)
+    public FavouritesViewModel(ILocationService locationService, IWeatherService weatherService,
+        IAlertService alertService, IStorageService storageService)
     {
         Title = "RAMU Weather";
 
         _locationService = locationService;
         _weatherService = weatherService;
         _alertService = alertService;
+        _storageService = storageService;
 
         FavouriteLocations = new ObservableCollection<CurrentJsonResponse>();
-        Task.Run(LoadCurrentLocationData);
         Task.Run(PopulateFavouritesList);
     }
 
@@ -38,28 +38,29 @@ public partial class FavouritesViewModel : BaseViewModel
     {
         var q = await _locationService.GetCurrentLocationQuery();
         var data = _weatherService.GetCurrentData(q);
-
         data.Location.Localtime = data.Location.Localtime.Substring(11);
 
-        CurrentLocation = data;
+        FavouriteLocations.Add(data);
     }
 
     async Task PopulateFavouritesList()
     {
-        //// TODO: read city names from DB
+        await LoadCurrentLocationData();
 
-        //var temp = new ObservableCollection<CurrentJsonResponse>();
-        //temp.Add(currentLocationData);
+        var locations = await _storageService.GetLocations();
 
-        //// Parse Localtime to correct format
-        //foreach (var data in temp)
-        //    data.Location.Localtime = data.Location.Localtime.Substring(11);
+        // Get data for stored locations and parse local time to correct format
+        foreach (var location in locations)
+        {
+            var data = _weatherService.GetCurrentData(location.CityName);
+            data.Location.Localtime = data.Location.Localtime.Substring(11);
 
-        //FavouriteLocations = temp;
+            FavouriteLocations.Add(data);
+        }
     }
 
     [RelayCommand]
-    void SaveCity()
+    async void SaveCity()
     {
         var cityName = CityNameEntryValue;
 
@@ -84,7 +85,8 @@ public partial class FavouritesViewModel : BaseViewModel
             data.Location.Localtime = data.Location.Localtime.Substring(11);
             FavouriteLocations.Add(data);
 
-            // TODO: implement db insert
+            // Store city name to local DB
+            await _storageService.AddLocation(cityName);
         }
         catch (Exception e)
         {

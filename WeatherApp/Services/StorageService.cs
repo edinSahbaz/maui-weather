@@ -1,5 +1,4 @@
-﻿using System;
-using SQLite;
+﻿using SQLite;
 using WeatherApp.Models;
 
 namespace WeatherApp.Services;
@@ -10,14 +9,14 @@ public class StorageService : IStorageService
 
     async Task Init()
     {
-        if (_db != null)
+        if (_db is not null)
             return;
 
-        // DB Path
-        var dbPath = Path.Combine(FileSystem.AppDataDirectory, "WeatherApp.db");
+        var dbPath = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            "WeatherAppData.db3");
 
         _db = new SQLiteAsyncConnection(dbPath);
-
         await _db.CreateTableAsync<StoredLocation>();
     }
 
