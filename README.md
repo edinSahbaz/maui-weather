@@ -1,6 +1,6 @@
 # <img src="https://github.com/edinSahbaz/maui-weather/assets/47791892/97b74a60-96f9-42dc-bfa3-2b8d69b0c461" height="50px" /> MAUI Weather App
 
-This repository contains the source code for a weather app that displays the current weather and 7-day forecast for the Hawaiian island of Maui. The app is built using .NET MAUI, a cross-platform UI framework for building native apps for iOS, Android, macOS, Windows, and more.
+This repository contains the source code for a weather app that displays the current weather and 3-day forecast for selected or current location. The app is built using .NET MAUI, a cross-platform UI framework for building native apps for iOS, Android, macOS, Windows, and more.
 
 ## Installation
 To install and run the app, follow these steps:
