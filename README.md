@@ -64,7 +64,7 @@ The app follows the SOLID principles, which are a set of guidelines for writing 
 
 `Dependency Inversion Principle (DIP)`: The app's dependencies are inverted so that higher-level modules depend on abstractions rather than concrete implementations. For example, the FavouritesViewModel depends on the IStorageService interface to retrieve and manage the user's favorite locations, rather than depending on the StorageService class directly.
 
-By following the MVVM pattern and SOLID principles, the Maui Weather app is designed to be maintainable, extensible, and testable.
+By following the MVVMS pattern and SOLID principles, the Maui Weather app is designed to be maintainable, extensible, and testable.
 
 ## Contributing
 Contributions to this project are welcome! If you'd like to contribute, please follow these steps:
