@@ -17,18 +17,19 @@ When the app is started, it will display the current weather conditions for your
 
 The app also includes a 3-day forecast, which can be accessed below the current weather data on the main screen, and the favorites page that allows users to set up to 8 favorite locations for quick access.
 
+## Main Features
+* `Current Weather Data` - The main page displays detailed current weather data alongside a 3-day weather forecast for the selected location.
+* `Geolocation` - The app uses Geolocation API to get the user's current location and display its forecast.
+* `Favourites Page` - Page that allows users to search and save locations as favorites for quick access.
+
 ## Technologies
 
 Technologies, tools, and languages used in this project.
 
-### Language
-![Csharp](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white)
-
-### Database
-![Sqlite](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)
-
-### Tools
-![Visual Studio](https://img.shields.io/badge/Visual%20Studio-5C2D91.svg?style=for-the-badge&logo=visual-studio&logoColor=white)
+| Languages | Database | Tools | 
+| --- | --- | --- | 
+| ![CSharp](https://a11ybadges.com/badge?logo=csharp) | ![SQLite](https://a11ybadges.com/badge?logo=sqlite) | ![Visual Studio](https://a11ybadges.com/badge?logo=visualstudio) |
+| ![XAML](https://a11ybadges.com/badge?logo=xaml) |  | ![Figma](https://a11ybadges.com/badge?logo=figma) |
 
 ## Arhitecture and SOLID
 
