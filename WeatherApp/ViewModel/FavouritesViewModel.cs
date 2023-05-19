@@ -45,6 +45,8 @@ public partial class FavouritesViewModel : BaseViewModel
 
     async Task PopulateFavouritesList()
     {
+        IsBusy = true;
+
         await LoadCurrentLocationData();
 
         var locations = await _storageService.GetLocations();
@@ -57,19 +59,22 @@ public partial class FavouritesViewModel : BaseViewModel
 
             FavouriteLocations.Add(data);
         }
+
+        IsBusy = false;
     }
 
     [RelayCommand]
     async void SaveCity()
     {
-        var cityName = CityNameEntryValue;
-
         try
         {
             IsBusy = true;
 
             // Custom exceptions
             if (FavouriteLocations.Count >= 6) throw new Exception("You can have a maximum of 6 favourite locations!");
+
+
+            var cityName = CityNameEntryValue;
             if (cityName == String.Empty || cityName == null) throw new Exception("Enter the city name, please!");
 
             // Tries to find if the city is already in favourites

@@ -19,6 +19,8 @@ public partial class HomeViewModel : BaseViewModel
     [ObservableProperty]
     string locationName;
     [ObservableProperty]
+    bool isRefreshing;
+    [ObservableProperty]
     WeatherAPI.Standard.Models.Location currentLocation;
     [ObservableProperty]
     Current currentWeather;

@@ -9,44 +9,51 @@
              Title="Favourites">
 
     <ScrollView>
-        <VerticalStackLayout IsVisible="{Binding IsNotBusy}">
-            <Entry Text="{Binding CityNameEntryValue,Mode=TwoWay}"  />
-            <Button Text="Add City" Command="{Binding SaveCityCommand}" />
+        <VerticalStackLayout>
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
+                                   IsVisible="{Binding IsBusy}"
+                                   Margin="0, 400, 0, 0"
+                                   Color="{StaticResource Primary}"/>
 
-            <CollectionView ItemsLayout="VerticalList"
-                            HeightRequest="1000"
-                            ItemsSource="{Binding FavouriteLocations}"
-                            VerticalScrollBarVisibility="Never"
-                            HorizontalScrollBarVisibility="Never">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:CurrentJsonResponse">
-                        <HorizontalStackLayout>
-                            <VerticalStackLayout>
-                                <VerticalStackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FavouritesViewModel}}, Path=GoToCityDataCommand}"
-                                        CommandParameter="{Binding Location.Name}"/>
-                                </VerticalStackLayout.GestureRecognizers>
+            <VerticalStackLayout IsVisible="{Binding IsNotBusy}">
+                <Entry Text="{Binding CityNameEntryValue,Mode=TwoWay}"  />
+                <Button Text="Add City" Command="{Binding SaveCityCommand}" />
 
-                                <Label Text="{Binding Location.Name}"
-                                   HorizontalTextAlignment="Center"/>
-                                <Label Text="{Binding Location.Country}"
-                                   HorizontalTextAlignment="Center"/>
-                                <Label Text="{Binding Location.Localtime}"
-                                   HorizontalTextAlignment="Center"/>
-                                <Label Text="{Binding Current.Condition.Text}"
+                <CollectionView ItemsLayout="VerticalList"
+                                HeightRequest="1000"
+                                ItemsSource="{Binding FavouriteLocations}"
+                                VerticalScrollBarVisibility="Never"
+                                HorizontalScrollBarVisibility="Never">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:CurrentJsonResponse">
+                            <HorizontalStackLayout>
+                                <VerticalStackLayout>
+                                    <VerticalStackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FavouritesViewModel}}, Path=GoToCityDataCommand}"
+                                            CommandParameter="{Binding Location.Name}"/>
+                                    </VerticalStackLayout.GestureRecognizers>
+
+                                    <Label Text="{Binding Location.Name}"
                                        HorizontalTextAlignment="Center"/>
-                                <Label Text="{Binding Current.TempC, StringFormat='{0:F1} °C'}"
+                                    <Label Text="{Binding Location.Country}"
                                        HorizontalTextAlignment="Center"/>
-                            </VerticalStackLayout>
+                                    <Label Text="{Binding Location.Localtime}"
+                                       HorizontalTextAlignment="Center"/>
+                                    <Label Text="{Binding Current.Condition.Text}"
+                                           HorizontalTextAlignment="Center"/>
+                                    <Label Text="{Binding Current.TempC, StringFormat='{0:F1} °C'}"
+                                           HorizontalTextAlignment="Center"/>
+                                </VerticalStackLayout>
 
-                            <Image WidthRequest="50"
-                                   HeightRequest="50"
-                                   Source="{Binding Current.Condition.Icon, StringFormat='https:{0}'}"/>
-                        </HorizontalStackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                                <Image WidthRequest="50"
+                                       HeightRequest="50"
+                                       Source="{Binding Current.Condition.Icon, StringFormat='https:{0}'}"/>
+                            </HorizontalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
