@@ -1,5 +1,4 @@
-﻿using System;
-using WeatherAPI.Standard;
+﻿using WeatherAPI.Standard;
 using WeatherAPI.Standard.Models;
 
 namespace WeatherApp.Services;

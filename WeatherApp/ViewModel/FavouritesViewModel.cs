@@ -1,9 +1,8 @@
-﻿using System;
+﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
-using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.Input;
 using WeatherAPI.Standard.Models;
 using WeatherApp.Services;
-using CommunityToolkit.Mvvm.Input;
 using WeatherApp.View;
 
 namespace WeatherApp.ViewModel;
@@ -117,6 +116,12 @@ public partial class FavouritesViewModel : BaseViewModel
         if (q == null) return;
 
         await Shell.Current.GoToAsync($"//{nameof(HomePage)}?location={q}", true);
+    }
+
+    [RelayCommand]
+    void DeleteLocation(string name)
+    {
+
     }
 }
 

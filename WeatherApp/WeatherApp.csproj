@@ -90,6 +90,7 @@
 	  <None Remove="Resources\Splash\splash_icon.svg" />
 	  <None Remove="Models\" />
 	  <None Remove="Resources\Images\settings.png" />
+	  <None Remove="Resources\Images\delete.png" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="View\" />
@@ -117,5 +118,8 @@
 	  <Compile Update="Services\AlertService.cs">
 	    <ExcludeFromCurrentConfiguration>true</ExcludeFromCurrentConfiguration>
 	  </Compile>
+	</ItemGroup>
+	<ItemGroup>
+	  <BundleResource Include="Resources\Images\delete.png" />
 	</ItemGroup>
 </Project>

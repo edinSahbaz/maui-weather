@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace WeatherApp.Services;
+﻿namespace WeatherApp.Services;
 
 public class AlertService : IAlertService
 {

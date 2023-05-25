@@ -26,30 +26,42 @@
                                 HorizontalScrollBarVisibility="Never">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:CurrentJsonResponse">
-                            <HorizontalStackLayout>
-                                <VerticalStackLayout>
-                                    <VerticalStackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FavouritesViewModel}}, Path=GoToCityDataCommand}"
-                                            CommandParameter="{Binding Location.Name}"/>
-                                    </VerticalStackLayout.GestureRecognizers>
+                            <SwipeView>
+                                <SwipeView.RightItems>
+                                    <SwipeItems>
+                                        <SwipeItem Text="Delete"
+                                                   IconImageSource="delete.png"
+                                                   BackgroundColor="red"
+                                                   Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FavouritesViewModel}}, Path=GoToCityDataCommand}"
+                                                   CommandParameter="{Binding Location.Name}" />
+                                    </SwipeItems>
+                                </SwipeView.RightItems>
 
-                                    <Label Text="{Binding Location.Name}"
-                                       HorizontalTextAlignment="Center"/>
-                                    <Label Text="{Binding Location.Country}"
-                                       HorizontalTextAlignment="Center"/>
-                                    <Label Text="{Binding Location.Localtime}"
-                                       HorizontalTextAlignment="Center"/>
-                                    <Label Text="{Binding Current.Condition.Text}"
-                                           HorizontalTextAlignment="Center"/>
-                                    <Label Text="{Binding Current.TempC, StringFormat='{0:F1} °C'}"
-                                           HorizontalTextAlignment="Center"/>
-                                </VerticalStackLayout>
+                                <HorizontalStackLayout>
+                                    <VerticalStackLayout>
+                                        <VerticalStackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FavouritesViewModel}}, Path=GoToCityDataCommand}"
+                                                CommandParameter="{Binding Location.Name}"/>
+                                        </VerticalStackLayout.GestureRecognizers>
 
-                                <Image WidthRequest="50"
-                                       HeightRequest="50"
-                                       Source="{Binding Current.Condition.Icon, StringFormat='https:{0}'}"/>
-                            </HorizontalStackLayout>
+                                        <Label Text="{Binding Location.Name}"
+                                           HorizontalTextAlignment="Center"/>
+                                        <Label Text="{Binding Location.Country}"
+                                           HorizontalTextAlignment="Center"/>
+                                        <Label Text="{Binding Location.Localtime}"
+                                           HorizontalTextAlignment="Center"/>
+                                        <Label Text="{Binding Current.Condition.Text}"
+                                               HorizontalTextAlignment="Center"/>
+                                        <Label Text="{Binding Current.TempC, StringFormat='{0:F1} °C'}"
+                                               HorizontalTextAlignment="Center"/>
+                                    </VerticalStackLayout>
+
+                                    <Image WidthRequest="50"
+                                           HeightRequest="50"
+                                           Source="{Binding Current.Condition.Icon, StringFormat='https:{0}'}"/>
+                                </HorizontalStackLayout>
+                            </SwipeView>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>

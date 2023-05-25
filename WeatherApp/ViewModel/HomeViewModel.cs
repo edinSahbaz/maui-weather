@@ -1,8 +1,6 @@
 ﻿using System.Collections.ObjectModel;
-using System.Runtime.ConstrainedExecution;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using WeatherAPI.Standard;
 using WeatherAPI.Standard.Models;
 using WeatherApp.Services;
 
