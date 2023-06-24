@@ -32,7 +32,7 @@
                                         <SwipeItem Text="Delete"
                                                    IconImageSource="delete.png"
                                                    BackgroundColor="red"
-                                                   Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FavouritesViewModel}}, Path=GoToCityDataCommand}"
+                                                   Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FavouritesViewModel}}, Path=DeleteLocationCommand}"
                                                    CommandParameter="{Binding Location.Name}" />
                                     </SwipeItems>
                                 </SwipeView.RightItems>

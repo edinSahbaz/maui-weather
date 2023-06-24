@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WeatherAPI.Standard.Models;
+using WeatherApp.Models;
 using WeatherApp.Services;
 using WeatherApp.View;
 
@@ -92,7 +93,7 @@ public partial class FavouritesViewModel : BaseViewModel
             FavouriteLocations.Add(data);
 
             // Store city name to local DB
-            await _storageService.AddLocation(cityName);
+            await _storageService.AddLocation(data.Location.Name);
         }
         catch (Exception e)
         {
@@ -119,9 +120,23 @@ public partial class FavouritesViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    void DeleteLocation(string name)
+    async void DeleteLocation(string name)
     {
+        name = name.ToLower();
 
+        var locations = await _storageService.GetLocations();
+
+        var selectedDbLocation = locations.Where(l => l.CityName.ToLower() == name).FirstOrDefault();
+
+        if (selectedDbLocation is null) return;
+        await _storageService.RemoveLocation(selectedDbLocation.Id);
+
+        var selectedLocation = FavouriteLocations.Where(l => l.Location.Name.ToLower() == name).FirstOrDefault();
+
+        if (selectedLocation is null) return;
+        FavouriteLocations.RemoveAt(FavouriteLocations.IndexOf(selectedLocation));
+
+        _alertService.DisplayAlert(Title, $"{selectedLocation.Location.Name} removed from Favourites!", "Ok");
     }
 }
 
