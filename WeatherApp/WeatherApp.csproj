@@ -89,7 +89,6 @@
 	  <None Remove="Resources\Splash\partly-cloudy-day.svg" />
 	  <None Remove="Resources\Splash\splash_icon.svg" />
 	  <None Remove="Models\" />
-	  <None Remove="Resources\Images\settings.png" />
 	  <None Remove="Resources\Images\delete.png" />
 	  <None Remove="Components\" />
 	</ItemGroup>
@@ -111,7 +110,6 @@
 	  <MauiImage Include="Resources\Images\barometer.svg" />
 	  <MauiImage Include="Resources\Images\sunrise.svg" />
 	  <MauiImage Include="Resources\Images\sunset.svg" />
-	  <MauiImage Include="Resources\Images\settings.png" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\WeatherAPI.Standard\WeatherAPI.Standard.csproj" />

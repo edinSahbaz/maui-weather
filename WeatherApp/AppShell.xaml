@@ -14,10 +14,6 @@
             <ShellContent ContentTemplate="{DataTemplate view:FavouritesPage}" />
         </Tab>
 
-        <Tab Title="Settings" Icon="settings.png" Route="SettingsPage">
-            <ShellContent ContentTemplate="{DataTemplate view:SettingsPage}" />
-        </Tab>
-
         <Tab Title="About" Icon="about.png" Route="AboutPage">
             <ShellContent ContentTemplate="{DataTemplate view:AboutPage}" />
         </Tab>
