@@ -1,6 +1,6 @@
 # MAUI Weather App
 
-This repository contains the source code for a weather app that displays the current weather and 3-day forecast for selected or current location. The app is built using .NET MAUI, a cross-platform UI framework for building native apps for iOS, Android, macOS, Windows, and more with C# and XAML.
+This repository contains the source code for a weather app that displays the current weather and 3-day forecast for the selected or current location. The app is built using .NET MAUI, a cross-platform UI framework for building native apps for iOS, Android, macOS, and Windows with C# and XAML.
 
 ## Installation
 To install and run the app, follow these steps:
