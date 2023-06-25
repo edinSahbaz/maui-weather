@@ -19,40 +19,40 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
+        <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Source="background" Aspect="AspectFill"/>
+
         <ActivityIndicator IsRunning="{Binding IsBusy}"
-                           IsVisible="{Binding IsBusy}"
-                           Margin="0, 400, 0, 0"
-                           Color="{StaticResource Primary}"/>
+                           IsVisible="{Binding IsBusy}"/>
 
+        <VerticalStackLayout IsVisible="{Binding IsNotBusy}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0">
+            <SearchBar x:Name="searchBar"
+                        Placeholder="Search locations..."
+                        Background="{StaticResource Primary}"
+                        SearchCommand="{Binding SaveCityCommand}"
+                        SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}" />
 
-        
-
-            <VerticalStackLayout IsVisible="{Binding IsNotBusy}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0">
-                <SearchBar x:Name="searchBar"
-                           Placeholder="Search locations..."
-                           SearchCommand="{Binding SaveCityCommand}"
-                           SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}" />
-
-                <CollectionView ItemsLayout="VerticalList"
-                                HeightRequest="1000"
-                                ItemsSource="{Binding FavouriteLocations}"
-                                VerticalScrollBarVisibility="Never"
-                                HorizontalScrollBarVisibility="Never">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="models:CurrentJsonResponse">
-                            <SwipeView>
-                                <SwipeView.RightItems>
-                                    <SwipeItems>
-                                        <SwipeItem Text="Delete"
-                                                   IconImageSource="delete.png"
-                                                   BackgroundColor="red"
-                                                   Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FavouritesViewModel}}, Path=DeleteLocationCommand}"
-                                                   CommandParameter="{Binding Location.Name}" />
-                                    </SwipeItems>
-                                </SwipeView.RightItems>
-
-                                <HorizontalStackLayout>
-                                    <VerticalStackLayout>
+            <CollectionView ItemsLayout="VerticalList"
+                            ItemsSource="{Binding FavouriteLocations}"
+                            VerticalScrollBarVisibility="Never"
+                            HorizontalScrollBarVisibility="Never">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:CurrentJsonResponse">
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Delete"
+                                                IconImageSource="delete.png"
+                                                BackgroundColor="red"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FavouritesViewModel}}, Path=DeleteLocationCommand}"
+                                                CommandParameter="{Binding Location.Name}" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            <Frame Background="#1E1E45"
+                                   BorderColor="#2A2C53"
+                                   HeightRequest="100"
+                                   Margin="10, 5">
+                                <Grid ColumnDefinitions="3*, 3*, *">
+                                    <VerticalStackLayout Grid.Column="0">
                                         <VerticalStackLayout.GestureRecognizers>
                                             <TapGestureRecognizer
                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:FavouritesViewModel}}, Path=GoToCityDataCommand}"
@@ -60,25 +60,45 @@
                                         </VerticalStackLayout.GestureRecognizers>
 
                                         <Label Text="{Binding Location.Name}"
-                                           HorizontalTextAlignment="Center"/>
+                                               FontSize="24"
+                                               FontFamily="PoppinsSemibold"
+                                            HorizontalTextAlignment="Center"/>
                                         <Label Text="{Binding Location.Country}"
-                                           HorizontalTextAlignment="Center"/>
-                                        <Label Text="{Binding Location.Localtime}"
-                                           HorizontalTextAlignment="Center"/>
-                                        <Label Text="{Binding Current.Condition.Text}"
-                                               HorizontalTextAlignment="Center"/>
-                                        <Label Text="{Binding Current.TempC, StringFormat='{0:F1} °C'}"
+                                               FontSize="12"
+                                               TextColor="{StaticResource Secondary}"
                                                HorizontalTextAlignment="Center"/>
                                     </VerticalStackLayout>
 
-                                    <Image WidthRequest="50"
-                                           HeightRequest="50"
-                                           Source="{Binding Current.Condition.Icon, StringFormat='https:{0}'}"/>
-                                </HorizontalStackLayout>
-                            </SwipeView>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </VerticalStackLayout>
+                                    <VerticalStackLayout Grid.Column="1">
+                                        <Label Text="{Binding Current.TempC, StringFormat='{0:F1} °C'}"
+                                               FontFamily="PoppinsSemibold"
+                                               FontSize="20"
+                                               HorizontalTextAlignment="Center"/>
+
+                                        <Border Stroke="{StaticResource Tertiary}"
+                                                HorizontalOptions="Center">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="30" />
+                                            </Border.StrokeShape>
+
+                                            <Label Text="{Binding Current.Condition.Text}"
+                                                    FontFamily="PoppinsSemibold"
+                                                    Padding="5"
+                                                    Background="{StaticResource Tertiary}"
+                                                    Style="{StaticResource weatherStatusStyle}" />
+                                        </Border>
+                                    </VerticalStackLayout>
+
+                                    <Image WidthRequest="70"
+                                            HeightRequest="70"
+                                            Grid.Column="2"
+                                            Source="{Binding Current.Condition.Icon, StringFormat='https:{0}'}"/>
+                                </Grid>
+                            </Frame>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
     </Grid>
 </ContentPage>
