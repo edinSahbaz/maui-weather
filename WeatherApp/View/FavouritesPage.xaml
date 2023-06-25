@@ -16,8 +16,10 @@
                                    Color="{StaticResource Primary}"/>
 
             <VerticalStackLayout IsVisible="{Binding IsNotBusy}">
-                <Entry Text="{Binding CityNameEntryValue,Mode=TwoWay}"  />
-                <Button Text="Add City" Command="{Binding SaveCityCommand}" />
+                <SearchBar x:Name="searchBar"
+                           Placeholder="Search locations..."
+                           SearchCommand="{Binding SaveCityCommand}"
+                           SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}" />
 
                 <CollectionView ItemsLayout="VerticalList"
                                 HeightRequest="1000"

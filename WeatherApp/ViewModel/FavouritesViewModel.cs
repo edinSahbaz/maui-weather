@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using WeatherAPI.Standard.Models;
-using WeatherApp.Models;
 using WeatherApp.Services;
 using WeatherApp.View;
 
@@ -15,8 +14,6 @@ public partial class FavouritesViewModel : BaseViewModel
     IAlertService _alertService;
     IStorageService _storageService;
 
-    [ObservableProperty]
-    string cityNameEntryValue;
     [ObservableProperty]
     ObservableCollection<CurrentJsonResponse> favouriteLocations;
 
@@ -64,7 +61,7 @@ public partial class FavouritesViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    async void SaveCity()
+    async void SaveCity(string cityName)
     {
         try
         {
@@ -72,10 +69,6 @@ public partial class FavouritesViewModel : BaseViewModel
 
             // Custom exceptions
             if (FavouriteLocations.Count >= 6) throw new Exception("You can have a maximum of 6 favourite locations!");
-
-
-            var cityName = CityNameEntryValue;
-            if (cityName == String.Empty || cityName == null) throw new Exception("Enter the city name, please!");
 
             // Tries to find if the city is already in favourites
             if(FavouriteLocations.Count > 0)
@@ -135,8 +128,6 @@ public partial class FavouritesViewModel : BaseViewModel
 
         if (selectedLocation is null) return;
         FavouriteLocations.RemoveAt(FavouriteLocations.IndexOf(selectedLocation));
-
-        _alertService.DisplayAlert(Title, $"{selectedLocation.Location.Name} removed from Favourites!", "Ok");
     }
 }
 
