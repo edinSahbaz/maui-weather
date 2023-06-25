@@ -84,8 +84,8 @@
                                             <Label Text="{Binding Current.Condition.Text}"
                                                     FontFamily="PoppinsSemibold"
                                                     Padding="5"
-                                                    Background="{StaticResource Tertiary}"
-                                                    Style="{StaticResource weatherStatusStyle}" />
+                                                    FontSize="10"
+                                                    Background="{StaticResource Tertiary}"/>
                                         </Border>
                                     </VerticalStackLayout>
 
