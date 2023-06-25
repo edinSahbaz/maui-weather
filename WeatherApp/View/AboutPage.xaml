@@ -5,7 +5,9 @@
              xmlns:viewmodel="clr-namespace:WeatherApp.ViewModel"
              x:Class="WeatherApp.View.AboutPage"
              x:DataType="viewmodel:AboutViewModel"
+             BackgroundColor="{StaticResource Primary}"
              Title="About">
+
     <FlexLayout Direction="Column" JustifyContent="SpaceBetween">
         <VerticalStackLayout
             BackgroundColor="{StaticResource Primary}"

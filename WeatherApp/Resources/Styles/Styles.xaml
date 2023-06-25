@@ -5,17 +5,44 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <Style TargetType="Shell" ApplyToDerivedTypes="True">
-        <Setter Property="Shell.BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Gray950}}" />
-        <Setter Property="Shell.ForegroundColor" Value="{OnPlatform WinUI={StaticResource Primary}, Default={StaticResource White}}" />
-        <Setter Property="Shell.TitleColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource White}}" />
-        <Setter Property="Shell.DisabledColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray950}}" />
-        <Setter Property="Shell.UnselectedColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray200}}" />
+        <Setter Property="Shell.BackgroundColor" Value="{StaticResource Primary}" />
+        <Setter Property="Shell.ForegroundColor" Value="{StaticResource Primary}" />
         <Setter Property="Shell.FlyoutBehavior" Value="Disabled" />
         <Setter Property="Shell.NavBarIsVisible" Value="False" />
         <Setter Property="Shell.NavBarHasShadow" Value="False" />
-        <Setter Property="Shell.TabBarBackgroundColor" Value="CornflowerBlue" />
-        <Setter Property="Shell.TabBarForegroundColor" Value="Green" />
-        <Setter Property="Shell.TabBarUnselectedColor" Value="AntiqueWhite" />
+        <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource Primary}" />
+        <Setter Property="Shell.TabBarForegroundColor" Value="{StaticResource Tertiary}" />
+        <Setter Property="Shell.TabBarUnselectedColor" Value="{StaticResource White}" />
+    </Style>
+
+    <Style TargetType="ContentPage">
+        <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+    </Style>
+
+    <Style TargetType="Label">
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontFamily" Value="PoppinsRegular" />
+    </Style>
+
+    <Style x:Key="detailsStyle" TargetType="Label">
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="TextColor" Value="{StaticResource Secondary}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Margin" Value="0, 20, 0, 0" />
+        <Setter Property="FontFamily" Value="PoppinsSemibold" />
+    </Style>
+
+    <Style x:Key="weatherStatusStyle" TargetType="Label">
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Padding" Value="20,6" />
+        <Setter Property="BackgroundColor" Value="#1E1E45" />
+    </Style>
+
+    <Style TargetType="ActivityIndicator">
+        <Setter Property="Margin" Value="0, 400, 0, 0" />
+        <Setter Property="Color" Value="{StaticResource White}" />
     </Style>
 </ResourceDictionary>
 

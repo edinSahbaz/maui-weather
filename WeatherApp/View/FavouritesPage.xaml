@@ -6,16 +6,28 @@
              xmlns:viewmodel="clr-namespace:WeatherApp.ViewModel"
              xmlns:models="clr-namespace:WeatherAPI.Standard.Models;assembly=WeatherAPI.Standard"
              x:DataType="viewmodel:FavouritesViewModel"
+             BackgroundColor="{StaticResource Primary}"
              Title="Favourites">
 
-    <ScrollView>
-        <VerticalStackLayout>
-            <ActivityIndicator IsRunning="{Binding IsBusy}"
-                                   IsVisible="{Binding IsBusy}"
-                                   Margin="0, 400, 0, 0"
-                                   Color="{StaticResource Primary}"/>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
-            <VerticalStackLayout IsVisible="{Binding IsNotBusy}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <ActivityIndicator IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}"
+                           Margin="0, 400, 0, 0"
+                           Color="{StaticResource Primary}"/>
+
+
+        
+
+            <VerticalStackLayout IsVisible="{Binding IsNotBusy}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0">
                 <SearchBar x:Name="searchBar"
                            Placeholder="Search locations..."
                            SearchCommand="{Binding SaveCityCommand}"
@@ -68,6 +80,5 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </VerticalStackLayout>
-        </VerticalStackLayout>
-    </ScrollView>
+    </Grid>
 </ContentPage>

@@ -81,12 +81,13 @@ public partial class HomeViewModel : BaseViewModel
     {
         // Sets current loaction and weather data
         CurrentLocation = forecastWeather.Location;
+        CurrentLocation.Localtime = CurrentLocation.Localtime.Substring(11);
         CurrentWeather = forecastWeather.Current;
 
         if (LocationName == null) LocationName = CurrentLocation.Name;
 
         // Sets weather data for next 24 hours
-        WeatherForecastHours = HomeViewModel.SetNext24HoursData(forecastWeather);
+        WeatherForecastHours = SetNext24HoursData(forecastWeather);
 
         // Sets next 3 days forecast and modifies day property to display day name
         var forecastDays = new ObservableCollection<Forecastday>(forecastWeather.Forecast.Forecastday);

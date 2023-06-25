@@ -73,7 +73,6 @@
 	  <None Remove="Resources\Fonts\Poppins-Regular.ttf" />
 	  <None Remove="Resources\Fonts\Poppins-SemiBold.ttf" />
 	  <None Remove="Resources\Fonts\MaterialIcons-Regular.ttf" />
-	  <None Remove="Resources\Images\sunset_line.png" />
 	  <None Remove="Resources\Images\Weather\Day\113.svg" />
 	  <None Remove="Resources\Images\Weather\Night\113.svg" />
 	  <None Remove="Resources\Images\humidity.svg" />
@@ -90,7 +89,7 @@
 	  <None Remove="Resources\Splash\splash_icon.svg" />
 	  <None Remove="Models\" />
 	  <None Remove="Resources\Images\delete.png" />
-	  <None Remove="Components\" />
+	  <None Remove="Resources\Images\background.png" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="View\" />
@@ -98,18 +97,17 @@
 	  <Folder Include="Resources\Images\" />
 	  <Folder Include="Services\" />
 	  <Folder Include="Models\" />
-	  <Folder Include="Components\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <MauiImage Include="Resources\Images\about.png" />
 	  <MauiImage Include="Resources\Images\favourite.png" />
 	  <MauiImage Include="Resources\Images\home.png" />
-	  <MauiImage Include="Resources\Images\sunset_line.png" />
 	  <MauiImage Include="Resources\Images\humidity.svg" />
 	  <MauiImage Include="Resources\Images\wind.svg" />
 	  <MauiImage Include="Resources\Images\barometer.svg" />
 	  <MauiImage Include="Resources\Images\sunrise.svg" />
 	  <MauiImage Include="Resources\Images\sunset.svg" />
+	  <MauiImage Include="Resources\Images\background.png" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\WeatherAPI.Standard\WeatherAPI.Standard.csproj" />

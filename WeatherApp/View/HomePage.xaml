@@ -6,194 +6,236 @@
              xmlns:model="clr-namespace:WeatherAPI.Standard.Models;assembly=WeatherAPI.Standard"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="viewmodel:HomeViewModel"
+             BackgroundColor="{StaticResource Primary}"
              Title="Home">
+
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing" />
-
     </ContentPage.Behaviors>
 
-    <ScrollView Orientation="Vertical">
-        <VerticalStackLayout>
-            <ActivityIndicator IsRunning="{Binding IsBusy}"
-                               IsVisible="{Binding IsBusy}"
-                               Margin="0, 400, 0, 0"
-                               Color="{StaticResource Primary}"/>
+    <Grid RowSpacing="0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
-            <VerticalStackLayout IsVisible="{Binding IsNotBusy}">
-                <!-- Header with current info -->
-                <VerticalStackLayout> 
-                    <Label Text="Your Location Now"
-                           TextColor="{StaticResource Gray300}"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="6*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="3*" />
+        </Grid.RowDefinitions>
+
+        <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Source="background" Aspect="AspectFill"/>
+
+        <ActivityIndicator IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}" />
+
+        <FlexLayout IsVisible="{Binding IsNotBusy}"
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    AlignItems="Center"
+                    JustifyContent="SpaceBetween"
+                    Direction="Column">
+            <StackLayout>
+                <Label Text="{Binding CurrentLocation.Name}"
+                       HorizontalTextAlignment="Center"
+                       FontSize="32"/>
+                <Label Text="{Binding CurrentLocation.Country}"
+                       HorizontalTextAlignment="Center"
+                       FontSize="12"/>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal"
+                         HorizontalOptions="Center"
+                         Margin="0, 20, 0, 0">
+                <Image HeightRequest="80"
+                       WidthRequest="80"
+                       Source="{Binding CurrentWeather.Condition.Icon, StringFormat='https:{0}'}"/>
+
+                <StackLayout VerticalOptions="Center" Padding="10, 0, 0, 0">
+                    <Label Text="Today"
+                           FontSize="20"
+                           FontFamily="PoppinsRegular"
+                           HorizontalTextAlignment="Start"/>
+                    <Label Text="{Binding CurrentLocation.Localtime}"
+                           FontSize="12"
+                           HorizontalTextAlignment="Center"
+                           FontFamily="PoppinsLight" />
+                </StackLayout>
+            </StackLayout>
+
+
+            <StackLayout Orientation="Vertical">
+                <StackLayout Orientation="Horizontal"
+                             Margin="22, 0, 0, 0"
+                             HorizontalOptions="Center">
+                    <Label Text="{Binding CurrentWeather.TempC}"
                            HorizontalOptions="Center"
-                           FontSize="12"/>
-                    <Label HorizontalTextAlignment="Center" Margin="0, 10">
-                        <Label.Text>
-                            <MultiBinding StringFormat="{}{0}, {1}">
-                                <Binding Path="CurrentLocation.Name" />
-                                <Binding Path="CurrentLocation.Country" />
-                            </MultiBinding>
-                        </Label.Text>
-                    </Label>
+                           FontSize="120"
+                           FontFamily="PoppinsRegular"/>
+                    <Label Text="°C"
+                           FontSize="22"
+                           FontFamily="PoppinsLight"
+                           Margin="0, 34, 0, 0"/>
+                </StackLayout>
 
-                    <Image HeightRequest="120"
-                           Source="{Binding CurrentWeather.Condition.Icon, StringFormat='https:{0}'}"/>
+                <Label Style="{StaticResource detailsStyle}"
+                       Margin="0, -20, 0, 0"
+                       Text="{Binding CurrentWeather.FeelslikeC, StringFormat='Feels like {0:F1} °C'}" />
 
-                    <Border Stroke="{StaticResource Background}"
-                            HorizontalOptions="Center"
-                            >
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="30" />
-                        </Border.StrokeShape>
+                <Border Stroke="{StaticResource Background}"
+                        Margin="0, 10, 0, 40"
+                        HorizontalOptions="Center">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="30" />
+                    </Border.StrokeShape>
 
-                        <Label Text="{Binding CurrentWeather.Condition.Text}"
-                           BackgroundColor="{StaticResource Secondary}"
-                           HorizontalOptions="Center"
-                           VerticalOptions="Center"
-                           Padding="20, 6"
-                           />
-                    </Border>
-        
-                    <Label Text="{Binding CurrentWeather.TempC, StringFormat='{0:F1} °C'}" />
-                    <Label Text="{Binding CurrentWeather.FeelslikeC, StringFormat='Feels like {0:F1} °C'}" />
+                    <Label Text="{Binding CurrentWeather.Condition.Text}"
+                           Style="{StaticResource weatherStatusStyle}" />
+                </Border>
 
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="40" /> 
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-
-                        <HorizontalStackLayout Grid.Column="0"
-                                               Grid.Row="0"
-                                               HorizontalOptions="Center"
-                                               VerticalOptions="Center" >
-                            <Image Source="humidity.png"
-                                   HeightRequest="30"
-                                   WidthRequest="30"/>
-                            <Label Text="{Binding CurrentWeather.Humidity, StringFormat='{0:F1}%'}"
-                                   VerticalOptions="Center"/>
-                        </HorizontalStackLayout>
-
-                        <HorizontalStackLayout Grid.Column="1"
-                                               Grid.Row="0"
-                                               HorizontalOptions="Center"
-                                               VerticalOptions="Center" >
-                            <Image Source="barometer.png"
-                                   HeightRequest="30"
-                                   WidthRequest="30"/>
-                            <Label Text="{Binding CurrentWeather.PressureMb, StringFormat='{0:F0}mBar'}"
-                                   VerticalOptions="Center"/>
-                        </HorizontalStackLayout>
-
-                        <HorizontalStackLayout Grid.Column="2"
-                                               Grid.Row="0"
-                                               HorizontalOptions="Center"
-                                               VerticalOptions="Center" >
-                            <Image Source="wind.png"
-                                   HeightRequest="30"
-                                   WidthRequest="30"/>
-                            <Label Text="{Binding CurrentWeather.WindKph, StringFormat='{0:F1}km/h'}"
-                                   VerticalOptions="Center"/>
-                            <!--<Label Text="{Binding CurrentWeather.WindDir}"/>-->
-                        </HorizontalStackLayout>
-                    </Grid>
-                </VerticalStackLayout>
-                <!-- END Header with current info -->
-
-
-
-                <!-- Sunrise and sunset info -->
-                <Grid Margin="0, 10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-
-                    <HorizontalStackLayout Grid.Column="0"
-                                           Grid.Row="0"
-                                           Margin="10, 0, 0, 30">
+                <FlexLayout AlignItems="Center"
+                            JustifyContent="Center"
+                            Margin="0, -20, 0, 60">
+                    <HorizontalStackLayout Margin="0, 0, 10, 0">
                         <Image Source="sunrise.png"
-                               HeightRequest="20"
-                               WidthRequest="20"/>
-                        <Label Text="{Binding WeatherForecastDays[0].Astro.Sunrise}"
+                                HeightRequest="20"
+                                WidthRequest="20"/>
+                        <Label Text="{Binding WeatherForecastDays[0].Astro.Sunrise, StringFormat='Sunrise: {0}'}"
+                               Style="{StaticResource detailsStyle}"
+                               Margin="0"
+                               FontSize="12"
                                VerticalOptions="Center"/>
                     </HorizontalStackLayout>
 
-                    <HorizontalStackLayout Grid.Column="1"
-                                           Grid.Row="1"
-                                           HorizontalOptions="End"
-                                           Margin="0, 0, 10, 40">
+                    <HorizontalStackLayout>
                         <Image Source="sunset.png"
-                               HeightRequest="20"
-                               WidthRequest="20"/>
-                        <Label Text="{Binding WeatherForecastDays[0].Astro.Sunset}"
+                                HeightRequest="20"
+                                WidthRequest="20"/>
+                        <Label Text="{Binding WeatherForecastDays[0].Astro.Sunset, StringFormat='Sunset: {0}'}"
+                               Style="{StaticResource detailsStyle}"
+                               Margin="0"
+                               FontSize="12"
                                VerticalOptions="Center"/>
                     </HorizontalStackLayout>
+                </FlexLayout>
+            </StackLayout>
 
-                    <Image Source="sunset_line.png"
-                           Grid.Column="0"
-                           Grid.ColumnSpan="2"
-                           Grid.Row="0"
-                           Grid.RowSpan="2"/>
-                </Grid>
-                <!-- END Sunrise and sunset info -->
+            <FlexLayout AlignItems="Center"
+                        JustifyContent="SpaceEvenly">
+                <HorizontalStackLayout HorizontalOptions="Center"
+                                        VerticalOptions="Center">
+                    <Image Source="humidity.png"
+                            HeightRequest="20"
+                            WidthRequest="20"/>
+                    <Label Text="{Binding CurrentWeather.Humidity, StringFormat='{0:F1}%'}"
+                           FontSize="12"
+                           VerticalOptions="Center"/>
+                </HorizontalStackLayout>
 
+                <HorizontalStackLayout HorizontalOptions="Center"
+                                       VerticalOptions="Center">
+                    <Image Source="barometer.png"
+                            HeightRequest="20"
+                            WidthRequest="20"/>
+                    <Label Text="{Binding CurrentWeather.PressureMb, StringFormat='{0:F0}mBar'}"
+                           FontSize="12"
+                           VerticalOptions="Center"/>
+                </HorizontalStackLayout>
 
+                <HorizontalStackLayout HorizontalOptions="Center"
+                                       VerticalOptions="Center">
+                    <Image Source="wind.png"
+                            HeightRequest="20"
+                            WidthRequest="20"/>
+                    <Label Text="{Binding CurrentWeather.WindKph, StringFormat='{0:F1}km/h'}"
+                           FontSize="12"
+                           VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+            </FlexLayout>
+        </FlexLayout>
 
-                <!-- Hourly weather forecast -->
-                <CollectionView ItemsLayout="HorizontalList"
-                                HeightRequest="110"
-                                ItemsSource="{Binding WeatherForecastHours}"
-                                VerticalScrollBarVisibility="Never"
-                                HorizontalScrollBarVisibility="Never">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="model:Hour">
-                            <VerticalStackLayout WidthRequest="70">
+        <CollectionView ItemsLayout="HorizontalList"
+                        IsVisible="{Binding IsNotBusy}"
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        HeightRequest="160"
+                        Margin="0, 20, 0, 0"
+                        ItemsSource="{Binding WeatherForecastHours}"
+                        VerticalScrollBarVisibility="Never"
+                        HorizontalScrollBarVisibility="Never">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Hour">
+                    <FlexLayout WidthRequest="100"> 
+                        <Frame Background="#1E1E45"
+                               CornerRadius="30"
+                               BorderColor="#2A2C53"
+                               WidthRequest="80"
+                               HeightRequest="120"
+                               Margin="10, 30, 10, 30">
+                            <VerticalStackLayout WidthRequest="80">
                                 <Label Text="{Binding Time, StringFormat='{0}'}"
-                                       HorizontalTextAlignment="Center"/>
-                                <Image WidthRequest="50"
-                                       HeightRequest="50"
-                                       Source="{Binding Condition.Icon, StringFormat='https:{0}'}"/>
+                                        FontFamily="PoppinsLight"
+                                        HorizontalTextAlignment="Center"/>
+                                <Image WidthRequest="30"
+                                        HeightRequest="40"
+                                        Source="{Binding Condition.Icon, StringFormat='https:{0}'}"/>
                                 <Label Text="{Binding TempC, StringFormat='{0:F1} °C'}"
-                                       HorizontalTextAlignment="Center"/>
+                                        FontSize="16"
+                                        FontFamily="PoppinsLight"
+                                        HorizontalTextAlignment="Center"/>
                             </VerticalStackLayout>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-                <!-- END Hourly weather forecast -->
+                        </Frame>
+                    </FlexLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
 
+        <StackLayout Grid.Row="2"
+                     IsVisible="{Binding IsNotBusy}"
+                     Grid.Column="0"
+                     Margin="0, 10, 0, 0">
+            <Grid ColumnDefinitions="*, 90, 80, 60, 60" Margin="20, 10">
+                <Label FontSize="12" Text="Avg" Grid.Column="1" FontFamily="PoppinsRegular" HorizontalTextAlignment="Center"/>
+                <Label FontSize="12" Text="Min" Grid.Column="3" FontFamily="PoppinsRegular" HorizontalTextAlignment="Center"/>
+                <Label FontSize="12" Text="Max" Grid.Column="4" FontFamily="PoppinsRegular" HorizontalTextAlignment="Center"/>
+            </Grid>
 
-
-                <!-- Daily weather forecast -->
-                <CollectionView ItemsSource="{Binding WeatherForecastDays}"
-                                VerticalScrollBarVisibility="Never"
-                                HorizontalScrollBarVisibility="Never"
-                                HeightRequest="160"
-                                >
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="model:Forecastday">
-                            <HorizontalStackLayout Spacing="20">
-                                <Label Text="{Binding Date}" />
-                                <Label Text="{Binding Day.Condition.Text}" />
-                                <Image
-                                    HeightRequest="50"
-                                    WidthRequest="50"
-                                    Source="{Binding Day.Condition.Icon, StringFormat='https:{0}'}" />
-                                <Label Text="{Binding Day.MintempC, StringFormat='{0:F1} °C'}" />
-                                <Label Text="{Binding Day.MaxtempC, StringFormat='{0:F1} °C'}" />
-                            </HorizontalStackLayout>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-                <!-- END Daily weather forecast -->
-            </VerticalStackLayout>
-        </VerticalStackLayout>
-    </ScrollView>
+            <CollectionView ItemsSource="{Binding WeatherForecastDays}"
+                            VerticalScrollBarVisibility="Never"
+                            HorizontalScrollBarVisibility="Never"
+                            Margin="20, 0">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Forecastday">
+                        <Grid ColumnDefinitions="*, 90, 80, 60, 60"
+                                RowDefinitions="50"
+                                VerticalOptions="Center">
+                            <Label Text="{Binding Date}"
+                                    Grid.Column="0"
+                                    Grid.Row="0"
+                                    FontFamily="PoppinsRegular"/>
+                            <Label Text="{Binding Day.MintempC, StringFormat='{0:F1} °C'}"
+                                    HorizontalTextAlignment="Center"
+                                    Grid.Row="0"
+                                    Grid.Column="1"/>
+                            <Image
+                                HeightRequest="34"
+                                WidthRequest="34"
+                                Grid.Column="2"
+                                Margin="0, 0, 0, 23"
+                                Grid.Row="0"
+                                Source="{Binding Day.Condition.Icon, StringFormat='https:{0}'}" />
+                            <Label Text="{Binding Day.MintempC, StringFormat='{0:F1} °C'}"
+                                    HorizontalTextAlignment="Center"
+                                    Grid.Row="0"
+                                    Grid.Column="3"/>
+                            <Label Text="{Binding Day.MaxtempC, StringFormat='{0:F1} °C'}"
+                                    HorizontalTextAlignment="Center"
+                                    Grid.Row="0"
+                                    Grid.Column="4"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </Grid>
 </ContentPage>
