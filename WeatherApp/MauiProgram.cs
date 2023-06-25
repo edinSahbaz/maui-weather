@@ -16,7 +16,7 @@ public static class MauiProgram
         {
             fonts.AddFont("Poppins-Light.ttf", "PoppinsLight");
             fonts.AddFont("Poppins-Regular.ttf", "PoppinsRegular");
-            fonts.AddFont("Poppins-Semibold.ttf", "PoppinsSemibold");
+            fonts.AddFont("Poppins-SemiBold.ttf", "PoppinsSemibold");
         }).UseMauiCommunityToolkit();
 #if DEBUG
         builder.Logging.AddDebug();

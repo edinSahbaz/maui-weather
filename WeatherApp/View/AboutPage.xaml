@@ -8,10 +8,25 @@
              BackgroundColor="{StaticResource Primary}"
              Title="About">
 
-    <FlexLayout Direction="Column" JustifyContent="SpaceBetween">
-        <VerticalStackLayout
-            BackgroundColor="{StaticResource Primary}"
-            Padding="100">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Image Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Source="background" Aspect="AspectFill"/>
+
+        <FlexLayout HeightRequest="200"
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    AlignItems="Center"
+                    JustifyContent="Center"
+                    Direction="Column">
             <Label Text="About"
                    HorizontalTextAlignment="Center"
                    FontSize="48"
@@ -20,29 +35,45 @@
                    HorizontalTextAlignment="Center"
                    FontSize="15"
                    TextColor="LightGray"/>
-        </VerticalStackLayout>
+        </FlexLayout>
 
         <Label Text="Weather App made in .NET MAUI using WeatherAPI and MAUICommunityToolkit. The App was made as a project for my Mobile Devices App Development university course."
-            FontSize="15"
+            FontSize="12"
             Margin="20, 0"
+            Grid.Row="1"
+            Grid.Column="0"
+            VerticalTextAlignment="Center"
             HorizontalTextAlignment="Center"/>
 
-        <HorizontalStackLayout
-            Margin="20"
-            HorizontalOptions="CenterAndExpand"
-            >
-            <HorizontalStackLayout.GestureRecognizers>
-                <TapGestureRecognizer
-                    Command="{Binding OpenLinkCommand}">
-                </TapGestureRecognizer>
-            </HorizontalStackLayout.GestureRecognizers>
-            <Image Source="https://cdn.weatherapi.com/v4/images/weatherapi_logo.png"
-               WidthRequest="60" HeightRequest="30"/>
-            <Label Text="Powered by WeatherAPI.com"
-                   VerticalOptions="Center"
-                   Margin="20, 0, 0, 0"
-                   FontSize="12"
-                   />
-        </HorizontalStackLayout>
-    </FlexLayout>
+        <Frame Background="#1E1E45"
+               CornerRadius="30"
+               BorderColor="#2A2C53"
+               HeightRequest="100"
+               Margin="10, 20"
+               Grid.Row="2"
+               Grid.Column="0">
+            <HorizontalStackLayout HorizontalOptions="CenterAndExpand">
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding OpenLinkCommand}">
+                    </TapGestureRecognizer>
+                </HorizontalStackLayout.GestureRecognizers>
+
+                <Frame Background="#fffffb"
+                       CornerRadius="30"
+                       HeightRequest="60"
+                       Margin="10">
+                    <Image Source="https://cdn.weatherapi.com/v4/images/weatherapi_logo.png"
+                           WidthRequest="60"
+                           HeightRequest="30"/>
+                </Frame>
+
+                <Label Text="Powered by WeatherAPI.com"
+                       VerticalOptions="Center"
+                       FontFamily="PoppinsSemibold"
+                       Margin="10, 0, 0, 0"
+                       FontSize="14"/>
+            </HorizontalStackLayout>
+        </Frame>
+    </Grid>
 </ContentPage>
