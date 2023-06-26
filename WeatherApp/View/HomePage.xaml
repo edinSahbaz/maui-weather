@@ -214,7 +214,7 @@
                                     Grid.Column="0"
                                     Grid.Row="0"
                                     FontFamily="PoppinsSemibold"/>
-                            <Label Text="{Binding Day.MintempC, StringFormat='{0:F1} °C'}"
+                            <Label Text="{Binding Day.AvgtempC, StringFormat='{0:F1} °C'}"
                                     HorizontalTextAlignment="Center"
                                     Grid.Row="0"
                                     Grid.Column="1"/>
